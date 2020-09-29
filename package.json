@@ -1,7 +1,12 @@
 {
   "name": "My-Awesome-Blog",
   "version": "0.1.0",
+  "description": "A simple blog app",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lewis-munyi/blog-app"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -35,5 +40,18 @@
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
     "vue-jest": "^5.0.0-0"
-  }
+  },
+  "keywords": [
+    "Vue",
+    "Express",
+    "MongoDB",
+    "Blog",
+    "CRUD"
+  ],
+  "author": {
+    "name": "Lewis Munyi",
+    "email": "lewis_m@students.uonbi.ac.ke",
+    "url": "https://github.com/lewis-munyi"
+  },
+  "license": "MIT"
 }
