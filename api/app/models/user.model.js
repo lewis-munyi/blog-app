@@ -1,4 +1,4 @@
-const { String } = require('core-js')
+const { String} = require('core-js')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
@@ -11,8 +11,8 @@ const UserSchema = new mongoose.Schema({
 		type: String,
 		require: true,
 	},
-	profile: String,
-	Social: String,
+	photo: String,
+	social: String,
 	email: {
 		type: String,
 		required: true,
@@ -24,6 +24,4 @@ const UserSchema = new mongoose.Schema({
 	},
 })
 
-const model = mongoose.model('User', UserSchema)
-
-module.exports = model
+module.exports = mongoose.model('User', UserSchema)
