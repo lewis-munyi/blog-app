@@ -1,10 +1,12 @@
-module.exports = app => {
-	// Import our user controller with all our CRUD methods
-	const user = require('../controllers/user.controller.js')
+const { Router } = require('express')
+const user = require('../controllers/user.controller.js')
+const router = Router()
+const { withJWTAuthMiddleware } = require("express-kun");
 
-	// Create a new user
-	app.post('/signup', user.create)
+const protectedRouter = withJWTAuthMiddleware(router, "yourSecretKey");
 
-	// Sign in an existing user
-	app.post('/signin', user.signin)
-}
+router.post('/signup', user.create)
+router.post('/signin', user.signin)
+protectedRouter.post('/update', user.update)
+
+module.exports = router

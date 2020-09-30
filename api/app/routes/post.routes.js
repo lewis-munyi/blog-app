@@ -1,19 +1,23 @@
-module.exports = app => {
-	// Import our Post controller with all our CRUD methods
-	const post = require('../controllers/post.controller.js')
+const { Router } = require('express')
+const post = require('../controllers/post.controller.js')
+const router = Router()
+const { withJWTAuthMiddleware } = require('express-kun')
 
-	// Create a new post
-	app.post('/post', post.create)
+const protectedRouter = withJWTAuthMiddleware(router, 'yourSecretKey')
 
-	// Retrieve latest posts
-	app.get('/posts', post.findAll)
+// Create a new post
+protectedRouter.post('/', post.create)
 
-	// Retrieve a single post by id
-	app.get('/post/:postId', post.findOne)
+// Retrieve latest posts
+router.get('/', post.findAll)
 
-	// Update a post by id
-	app.put('/post/:postId', post.update)
+// Retrieve a single post by id
+router.get('/:postId', post.findOne)
 
-	// Delete a post by noteId
-	app.delete('/post/:postId', post.delete)
-}
+// Update a post by id
+protectedRouter.put('/:postId', post.update)
+
+// Delete a post by noteId
+protectedRouter.delete('/:postId', post.delete)
+
+module.exports = router

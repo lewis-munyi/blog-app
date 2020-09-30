@@ -4,6 +4,9 @@ const chalk = require('chalk')
 const mongoose = require('mongoose')
 const dbConfig = require('./config/database.config')
 
+const userRouter = require('./app/routes/user.routes')
+const postRouter = require('./app/routes/post.routes')
+
 // Configuring the database
 mongoose.Promise = global.Promise
 
@@ -31,14 +34,15 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 // define a simple route
-app.get('/', (req, res) => {
-	res.json({ message: 'Welcome to our Blog!' })
-})
+// app.get('/', (req, res) => {
+// 	res.json({ message: 'Welcome to our Blog!' })
+// })
 
 // listen for requests
 app.listen(3000, () => {
 	console.log('Server is listening on port 3000')
 })
 
-require('./app/routes/user.routes.js')(app)
-require('./app/routes/post.routes.js')(app)
+app.use('/user', userRouter)
+
+app.use('/posts', postRouter)
