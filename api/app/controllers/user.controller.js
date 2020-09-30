@@ -1,7 +1,9 @@
 const User = require('../models/user.model')
+const Post = require('../models/post.model')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const jwt_decode = require('jwt-decode')
+const { post } = require('../routes/user.routes')
 
 exports.create = (req, res) => {
 	const { firstname, lastname, email, password, photo, social } = req.body
@@ -113,9 +115,13 @@ exports.update = (req, res) => {
 }
 
 exports.delete = (req, res) => {
+	const user = jwt_decode(req.headers.authorization.split(' ')[1]).user._id
 	// Todo: Delete all posts
+	Post.deleteMany({ author_id: user }).catch(error => {
+		return res.status(500).send({ message: 'Error deleting your posts' + error.message })
+	})
 
-	User.findByIdAndRemove(jwt_decode(req.headers.authorization.split(' ')[1]).user._id)
+	User.findByIdAndRemove(user)
 		.then(user => {
 			if (!user) {
 				return res.status(404).send({

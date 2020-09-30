@@ -3,8 +3,6 @@ const jwt_decode = require('jwt-decode')
 
 // Create and Save a new Post
 exports.create = (req, res) => {
-	// Todo: Auth check
-
 	// Validate request
 	if (!req.body.title || !req.body.content) {
 		return res.status(400).send({
