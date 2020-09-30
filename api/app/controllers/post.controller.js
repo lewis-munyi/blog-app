@@ -39,7 +39,21 @@ exports.create = (req, res) => {
 }
 
 // Retrieve and return all Posts from the database.
-exports.findAll = (req, res) => {}
+exports.findAll = (req, res) => {
+	let sortBy
+	req.query.sort == 'popularity' ? (sortBy = { claps: -1 }) : (sortBy = { _id: -1 })
+
+	Post.find()
+		.sort(sortBy)
+		.then(posts => {
+			res.send(posts)
+		})
+		.catch(err => {
+			res.status(500).send({
+				message: err.message || 'Some error occurred while retrieving posts.',
+			})
+		})
+}
 
 // Find a single Post with a PostId
 exports.findOne = (req, res) => {}
