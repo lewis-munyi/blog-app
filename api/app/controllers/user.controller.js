@@ -1,6 +1,7 @@
 const User = require('../models/user.model')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const jwt_decode = require('jwt-decode')
 
 exports.create = (req, res) => {
 	const { firstname, lastname, email, password, photo, social } = req.body
@@ -74,9 +75,9 @@ exports.signin = (req, res) => {
 }
 
 exports.update = (req, res) => {
-	// Todo: Auth check
+	const { firstname, lastname, email, password, photo, social } = req.body.user
 
-	const { _id, firstname, lastname, email, password, photo, social } = req.body.user
+	const user = jwt_decode(req.headers.authorization.split(' ')[1]).user._id
 
 	if (!firstname || !lastname || !email || !password) {
 		return res.status(400).send({
@@ -86,7 +87,7 @@ exports.update = (req, res) => {
 
 	// Find user and update
 	User.findByIdAndUpdate(
-		_id,
+		user,
 		{
 			email,
 			password,
@@ -107,6 +108,30 @@ exports.update = (req, res) => {
 			}
 			return res.status(error.status).send({
 				message: error.message,
+			})
+		})
+}
+
+exports.delete = (req, res) => {
+	// Todo: Delete all posts
+
+	User.findByIdAndRemove(jwt_decode(req.headers.authorization.split(' ')[1]).user._id)
+		.then(user => {
+			if (!user) {
+				return res.status(404).send({
+					message: "Unfortunately, we don't know you :/",
+				})
+			}
+			res.send({ message: 'Thanos has snapped, for you!' })
+		})
+		.catch(err => {
+			if (err.kind === 'ObjectId' || err.name === 'NotFound') {
+				return res.status(404).send({
+					message: "That's strange. We cannot find your ID",
+				})
+			}
+			return res.status(500).send({
+				message: 'An internal error occurred while deleting you. Try again later',
 			})
 		})
 }

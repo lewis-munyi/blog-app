@@ -8,5 +8,6 @@ const protectedRouter = withJWTAuthMiddleware(router, "yourSecretKey");
 router.post('/signup', user.create)
 router.post('/signin', user.signin)
 protectedRouter.post('/update', user.update)
+protectedRouter.delete('/delete', user.delete)
 
 module.exports = router
