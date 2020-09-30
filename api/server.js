@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const chalk = require('chalk')
 const mongoose = require('mongoose')
-const dbConfig = require('./config/database.config.js')
+const dbConfig = require('./config/database.config')
 
 // Configuring the database
 mongoose.Promise = global.Promise
@@ -39,3 +39,5 @@ app.get('/', (req, res) => {
 app.listen(3000, () => {
 	console.log('Server is listening on port 3000')
 })
+
+require('./app/routes/post.routes.js')(app)

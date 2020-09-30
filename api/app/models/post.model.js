@@ -1,12 +1,24 @@
+const { String } = require('core-js')
 const mongoose = require('mongoose')
 
 const PostSchema = mongoose.Schema(
 	{
-		title: String,
+		title: {
+			type: String,
+			required: true,
+		},
 		description: String,
-		content: String,
-		author_id: String,
+		brief: String,
+		content: {
+			type: String,
+			required: true,
+		},
+
 		claps: Number,
+		cover: {
+			type: String,
+			required: true,
+		},
 	},
 	{
 		timestamps: true,
