@@ -43,7 +43,13 @@ exports.create = (req, res) => {
 // Retrieve and return all posts by popularity/timestamp
 exports.findAll = (req, res) => {
 	let sortBy
-	req.query.sort == 'popularity' ? (sortBy = { claps: -1 }) : (sortBy = { _id: -1 })
+	req.query.sort == 'popularity'
+		? (sortBy = {
+				claps: -1,
+		  })
+		: (sortBy = {
+				_id: -1,
+		  })
 
 	Post.find()
 		.sort(sortBy)
@@ -82,16 +88,27 @@ exports.findOne = (req, res) => {
 
 // Update a Post by ID
 exports.update = (req, res) => {
-	// Todo: Auth check
+	const user = jwt_decode(req.headers.authorization.split(' ')[1]).user._id
 
 	if (!req.body.title || !req.body.content) {
 		return res.status(400).send({
-			message: 'Missing Title, Empty body or Missing Author.',
+			message: 'Missing Title, Empty body or Missing Author',
 		})
 	}
 
-	// Get Post > Author and compare with user ids
-	// const user = jwt_decode(req.headers.authorization.split(' ')[1]).user._id
+	Post.findById(req.params.postId).then(post => {
+		if (!post) {
+			return res.status(404).send({
+				message: 'Post not found',
+			})
+		}
+
+		if (String(post.author_id) !== String(user)){
+			res.status(401).send({
+				message: 'You are not authorized to perform this action!',
+			})
+		}
+	})
 
 	// Find post and update it with the request body
 	Post.findByIdAndUpdate(
@@ -109,7 +126,9 @@ exports.update = (req, res) => {
 			content: req.body.content,
 			cover: req.body.cover || 'https://source.unsplash.com/random/1920/1080',
 		},
-		{ new: true } // Return the new post
+		{
+			new: true,
+		}
 	)
 		.then(post => {
 			if (!post) {
@@ -133,7 +152,21 @@ exports.update = (req, res) => {
 
 // Delete a Post by ID
 exports.delete = (req, res) => {
-	// Todo: Add Auth Check
+	const user = jwt_decode(req.headers.authorization.split(' ')[1]).user._id
+
+	Post.findById(req.params.postId).then(post => {
+		if (!post) {
+			return res.status(404).send({
+				message: 'Post not found',
+			})
+		}
+
+		if (String(post.author_id) !== String(user)){
+			res.status(401).send({
+				message: 'You are not authorized to perform this action!',
+			})
+		}
+	})
 
 	Post.findByIdAndRemove(req.params.postId)
 		.then(Post => {
@@ -142,7 +175,9 @@ exports.delete = (req, res) => {
 					message: 'Post not found',
 				})
 			}
-			res.send({ message: 'Post deleted!' })
+			res.send({
+				message: 'Post deleted!',
+			})
 		})
 		.catch(err => {
 			if (err.kind === 'ObjectId' || err.name === 'NotFound') {

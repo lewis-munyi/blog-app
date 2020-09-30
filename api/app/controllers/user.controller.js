@@ -3,7 +3,6 @@ const Post = require('../models/post.model')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const jwt_decode = require('jwt-decode')
-const { post } = require('../routes/user.routes')
 
 exports.create = (req, res) => {
 	const { firstname, lastname, email, password, photo, social } = req.body
