@@ -19,6 +19,14 @@ const PostSchema = mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		author_id: {
+			type: mongoose.Schema.Types.ObjectId,
+			required: true,
+		},
+		author: {
+			type: String,
+			required: true,
+		},
 	},
 	{
 		timestamps: true,

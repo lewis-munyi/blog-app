@@ -1,4 +1,5 @@
 const Post = require('../models/post.model')
+const jwt_decode = require('jwt-decode')
 
 // Create and Save a new Post
 exports.create = (req, res) => {
@@ -24,6 +25,8 @@ exports.create = (req, res) => {
 				: req.body.content,
 		content: req.body.content,
 		claps: 0,
+		author_id: jwt_decode(req.headers.authorization.split(' ')[1]).user._id,
+		author: jwt_decode(req.headers.authorization.split(' ')[1]).user.name,
 		cover: req.body.cover ? req.body.cover : 'https://source.unsplash.com/random/1920/1080',
 	})
 
@@ -88,6 +91,9 @@ exports.update = (req, res) => {
 			message: 'Missing Title, Empty body or Missing Author.',
 		})
 	}
+
+	// Get Post > Author and compare with user ids
+	// const user = jwt_decode(req.headers.authorization.split(' ')[1]).user._id
 
 	// Find post and update it with the request body
 	Post.findByIdAndUpdate(
