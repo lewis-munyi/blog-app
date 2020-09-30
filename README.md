@@ -64,13 +64,11 @@ This is an open source application, therefore contributions, pull requests are c
 This project incorporates these amazing frameworks, libraries, and technologies.
 * [Vue JS](https://vuejs.org/)
 * [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
 * [Express](https://expressjs.com/)
 * [Mongo DB - Atlas](https://www.mongodb.com/cloud/atlas)
-* [OKTA](https://www.okta.com/)
 
 ## Project Overview
-The project if grouped into two parts; front-end, and backend applications that communicate over RESTful APIs to **C**reate, **R**ead, **U**pdate, and **D**elete blog posts.
+The project if grouped into two parts; front-end, and backend applications that communicate over RESTful APIs to **C**reate, **R**etrieve, **U**pdate, and **D**elete blog posts.
 
 ### Front-end
 The frontend will have the following pages/activities
@@ -89,7 +87,7 @@ The frontend will have the following pages/activities
    1. User can edit and update a blog post
 6. Blog:
    1. User can see all of their blog posts in one page
-   2. Shortcuts to create/read/update/delete posts will be available here
+   2. Shortcuts to create/retrieve/update/delete posts will be available here
 
 ### Backend
 1. Database:
