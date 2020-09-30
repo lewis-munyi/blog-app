@@ -72,3 +72,41 @@ exports.signin = (req, res) => {
 			})
 		})
 }
+
+exports.update = (req, res) => {
+	// Todo: Auth check
+
+	const { _id, firstname, lastname, email, password, photo, social } = req.body.user
+
+	if (!firstname || !lastname || !email || !password) {
+		return res.status(400).send({
+			message: 'Name, Email, or Password fields missing',
+		})
+	}
+
+	// Find user and update
+	User.findByIdAndUpdate(
+		_id,
+		{
+			email,
+			password,
+			name: firstname.concat(' ', lastname),
+			social: social || '',
+			photo: photo || `https://ui-avatars.com/api/?name=${firstname}+${lastname}?size=512`,
+		},
+		{ new: true } // Return the updated
+	)
+		.then(user => {
+			return res.send(user)
+		})
+		.catch(error => {
+			if (error.kind === 'ObjectId') {
+				return res.status(404).send({
+					message: 'User not found',
+				})
+			}
+			return res.status(error.status).send({
+				message: error.message,
+			})
+		})
+}
