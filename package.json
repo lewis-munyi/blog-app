@@ -23,6 +23,7 @@
     "express": "^4.17.1",
     "express-kun": "^1.0.24",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.0.0",
     "mongoose": "^5.10.7",
     "register-service-worker": "^1.7.1",
     "vue": "^3.0.0-0",
