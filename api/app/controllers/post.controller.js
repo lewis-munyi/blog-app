@@ -81,5 +81,27 @@ exports.findOne = (req, res) => {
 // Update a Post identified by the PostId in the request
 exports.update = (req, res) => {}
 
-// Delete a Post with the specified PostId in the request
-exports.delete = (req, res) => {}
+// Delete a Post by ID
+exports.delete = (req, res) => {
+	// Todo: Add Auth Check
+
+	Post.findByIdAndRemove(req.params.postId)
+		.then(Post => {
+			if (!Post) {
+				return res.status(404).send({
+					message: 'Post not found',
+				})
+			}
+			res.send({ message: 'Post deleted!' })
+		})
+		.catch(err => {
+			if (err.kind === 'ObjectId' || err.name === 'NotFound') {
+				return res.status(404).send({
+					message: 'Post not found with id ' + req.params.postId,
+				})
+			}
+			return res.status(500).send({
+				message: 'An internal error occurred while deleting the post. Try again later',
+			})
+		})
+}
