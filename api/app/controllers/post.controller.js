@@ -55,8 +55,28 @@ exports.findAll = (req, res) => {
 		})
 }
 
-// Find a single Post with a PostId
-exports.findOne = (req, res) => {}
+// Find a single Post by id
+exports.findOne = (req, res) => {
+	Post.findById(req.params.postId)
+		.then(post => {
+			if (!post) {
+				return res.status(404).send({
+					message: 'Post not found',
+				})
+			}
+			res.send(post)
+		})
+		.catch(err => {
+			if (err.kind === 'ObjectId') {
+				return res.status(404).send({
+					message: 'Post not found. Please check the Id supplied',
+				})
+			}
+			return res.status(500).send({
+				message: 'Error retrieving post with id ' + req.params.postId,
+			})
+		})
+}
 
 // Update a Post identified by the PostId in the request
 exports.update = (req, res) => {}
