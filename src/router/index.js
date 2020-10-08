@@ -20,6 +20,21 @@ const routes = [
 		name: 'Test',
 		component: () => import(/* webpackChunkName: "test" */ '../views/Test.vue'),
 	},
+	{
+		path: '/edit',
+		name: 'EditBlog',
+		component: () => import(/* webpackChunkName: "editblog" */ '../views/EditBlog.vue'),
+	},
+	{
+		path: '/blog',
+		name: 'Blog',
+		component: () => import(/* webpackChunkName: "blog" */ '../views/Blog.vue'),
+	},
+	{
+		path: '/create',
+		name: 'CreateBlog',
+		component: () => import(/* webpackChunkName: "createblog" */ '../views/CreateBlog.vue'),
+	},
 ]
 
 const router = createRouter({

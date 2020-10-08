@@ -27,7 +27,16 @@
 					<router-link class="nav-link" to="/test">Test</router-link>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">About</a>
+		
+					<router-link class="nav-link" to="/blog">Blog</router-link>
+				</li>
+				<li class="nav-item">
+		
+					<router-link class="nav-link" to="/edit">Edit Blog</router-link>
+				</li>
+				<li class="nav-item">
+		
+					<router-link class="nav-link" to="/create">Create Blog</router-link>
 				</li>
 				<li class="nav-item dropdown">
 					<a
