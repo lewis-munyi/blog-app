@@ -103,7 +103,7 @@ exports.update = (req, res) => {
 			})
 		}
 
-		if (String(post.author_id) !== String(user)){
+		if (String(post.author_id) !== String(user)) {
 			res.status(401).send({
 				message: 'You are not authorized to perform this action!',
 			})
@@ -161,7 +161,7 @@ exports.delete = (req, res) => {
 			})
 		}
 
-		if (String(post.author_id) !== String(user)){
+		if (String(post.author_id) !== String(user)) {
 			res.status(401).send({
 				message: 'You are not authorized to perform this action!',
 			})
@@ -187,6 +187,26 @@ exports.delete = (req, res) => {
 			}
 			return res.status(500).send({
 				message: 'An internal error occurred while deleting the post. Try again later',
+			})
+		})
+}
+
+exports.findBlog = (req, res) => {
+	Post.find({ author_id: req.params.id })
+		.sort({ _id: -1 })
+		.then(post => {
+			// Successful request
+			if (!post) {
+				// No user
+				return res.status(404).send({
+					message: 'No posts found',
+				})
+			}
+			return res.status(200).send(post)
+		})
+		.catch(err => {
+			return res.status(500).send({
+				message: 'An internal server error occured: ' + err.message,
 			})
 		})
 }

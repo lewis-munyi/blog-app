@@ -1,29 +1,30 @@
 <template>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="#">Navbar</a>
-		<button
-			class="navbar-toggler"
-			type="button"
-			data-toggle="collapse"
-			data-target="#navbar"
-			aria-controls="navbar"
-			aria-expanded="false"
-			aria-label="Toggle navigation"
-		>
-			<span class="navbar-toggler-icon"></span>
-		</button>
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Navbar</a>
+			<button
+				class="navbar-toggler"
+				type="button"
+				data-toggle="collapse"
+				data-target="#navbar"
+				aria-controls="navbar"
+				aria-expanded="false"
+				aria-label="Toggle navigation"
+			>
+				<span class="navbar-toggler-icon"></span>
+			</button>
 
-		<div class="collapse navbar-collapse" id="navbar">
-			<ul class="navbar-nav mr-auto align-left">
-				<li class="nav-item active">
-					<router-link class="nav-link" to="/"
-						>Home <span class="sr-only">(current)</span></router-link
-					>
-				</li>
-				<li class="nav-item">
-					<router-link class="nav-link" to="/about">About</router-link>
-				</li>
-				<!-- <li class="nav-item dropdown">
+			<div class="collapse navbar-collapse" id="navbar">
+				<ul class="navbar-nav mr-auto align-left">
+					<li class="nav-item active">
+						<router-link class="nav-link" to="/"
+							>Home <span class="sr-only">(current)</span></router-link
+						>
+					</li>
+					<li class="nav-item">
+						<router-link class="nav-link" to="/about">About</router-link>
+					</li>
+					<!-- <li class="nav-item dropdown">
 					<a
 						class="nav-link dropdown-toggle"
 						data-toggle="dropdown"
@@ -41,75 +42,82 @@
 						<a class="dropdown-item" href="#">Separated link</a>
 					</div>
 				</li> -->
-			</ul>
-			<ul class="navbar-nav mr-2 align-right">
-				<li class="nav-item active" v-if="user == null">
-					<a class="nav-link" href="#" @click="showSignUpModal">
-						{{ isSignIn == true ? 'Sign In' : 'Sign Up' }} <span class="sr-only"></span>
-					</a>
-				</li>
-				<li class="nav-item dropdown" v-else>
-					<a
-						class="nav-link dropdown-toggle"
-						data-toggle="dropdown"
-						href="#"
-						role="button"
-						aria-haspopup="true"
-						aria-expanded="false"
-					>
-						<img id="ppic" :src="user.photo" alt="profile_photo" />
-					</a>
-					<div class="dropdown-menu dropdown-menu-lg-right">
-						<a class="dropdown-item font-weight-bold" href="#"
-							><i class="fas fa-user"></i>{{ user.name }}</a
-						>
-						<a class="dropdown-item" href="#"><i class="fas fa-rss"></i>Blog</a>
-						<a class="dropdown-item" href="#"><i class="fas fa-share"></i>Share</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#" @click="logout">
-							<i class="fas fa-sign-out-alt"></i>Log out
-						</a>
-					</div>
-				</li>
-			</ul>
-		</div>
-		<!-- Sign in Modal -->
-		<div
-			class="modal fade"
-			id="signUpModal"
-			tabindex="-1"
-			aria-labelledby="signUpModalLabel"
-			aria-hidden="true"
-		>
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="signUpModalLabel">
+				</ul>
+				<ul class="navbar-nav mr-2 align-right">
+					<li class="nav-item active" v-if="user == null">
+						<a class="nav-link" href="#" @click="showSignUpModal">
 							{{ isSignIn == true ? 'Sign In' : 'Sign Up' }}
-						</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<SignInForm v-if="isSignIn == true" />
-						<SignUpForm v-on:child-to-parent="toggleSignIn" v-else />
-					</div>
-					<div class="modal-footer align-left">
+							<span class="sr-only"></span>
+						</a>
+					</li>
+					<li class="nav-item dropdown" v-else>
 						<a
+							class="nav-link dropdown-toggle"
+							data-toggle="dropdown"
 							href="#"
-							@click="toggleSignIn"
-							v-if="isSignIn == true"
-							class="btn btn-sm btn-outline-secondary"
-							>or Sign Up</a
+							role="button"
+							aria-haspopup="true"
+							aria-expanded="false"
 						>
-						<a
-							href="#"
-							@click="toggleSignIn"
-							v-else
-							class="btn btn-sm btn-outline-secondary"
-							>or Sign In</a
-						>
+							<img id="ppic" :src="user.photo" alt="profile_photo" />
+						</a>
+						<div class="dropdown-menu dropdown-menu-lg-right">
+							<a class="dropdown-item font-weight-bold" href="#"
+								><i class="fas fa-user"></i>{{ user.name }}</a
+							>
+							<a class="dropdown-item" href="#"><i class="fas fa-rss"></i>Blog</a>
+							<a class="dropdown-item" href="#"><i class="fas fa-share"></i>Share</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#" @click="logout">
+								<i class="fas fa-sign-out-alt"></i>Log out
+							</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<!-- Sign in Modal -->
+			<div
+				class="modal fade"
+				id="signUpModal"
+				tabindex="-1"
+				aria-labelledby="signUpModalLabel"
+				aria-hidden="true"
+			>
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="signUpModalLabel">
+								{{ isSignIn == true ? 'Sign In' : 'Sign Up' }}
+							</h5>
+							<button
+								type="button"
+								class="close"
+								data-dismiss="modal"
+								aria-label="Close"
+							>
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<SignInForm v-if="isSignIn == true" />
+							<SignUpForm v-on:child-to-parent="toggleSignIn" v-else />
+						</div>
+						<div class="modal-footer align-left">
+							<a
+								href="#"
+								@click="toggleSignIn"
+								v-if="isSignIn == true"
+								class="btn btn-sm btn-outline-secondary"
+								>or Sign Up</a
+							>
+							<a
+								href="#"
+								@click="toggleSignIn"
+								v-else
+								class="btn btn-sm btn-outline-secondary"
+								>or Sign In</a
+							>
+						</div>
 					</div>
 				</div>
 			</div>

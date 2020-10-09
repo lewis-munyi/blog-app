@@ -14,6 +14,9 @@ router.get('/', post.findAll)
 // Retrieve a single post by id
 router.get('/:postId', post.findOne)
 
+// Retrieve all of a user's posts
+router.get('/all/:id', post.findBlog)
+
 // Update a post by id
 protectedRouter.put('/:postId', post.update)
 
