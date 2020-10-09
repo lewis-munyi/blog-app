@@ -80,6 +80,24 @@
 				</div>
 				<div class=" row form-group">
 					<div class="col col-sm-12 col-md-4">
+						<label for="email">Social Media</label>
+					</div>
+					<div class="col col-sm-12 col-md-8">
+						<input
+							type="text"
+							class="form-control"
+							id="social"
+							aria-describedby="socialHelp"
+							placeholder="Enter a valid link to your social media account"
+							v-model="form.social"
+						/>
+						<small id="socialHelp" class="form-text text-muted"
+							>This is not a required field</small
+						>
+					</div>
+				</div>
+				<div class=" row form-group">
+					<div class="col col-sm-12 col-md-4">
 						<label for="email">Photo URL</label>
 					</div>
 					<div class="col col-sm-12 col-md-8">
