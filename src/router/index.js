@@ -26,11 +26,6 @@ const routes = [
 		component: () => import(/* webpackChunkName: "editblog" */ '../views/EditBlog.vue'),
 	},
 	{
-		path: '/blog',
-		name: 'Blog',
-		component: () => import(/* webpackChunkName: "blog" */ '../views/Blog.vue'),
-	},
-	{
 		path: '/user/:id/blog',
 		name: 'Blog',
 		component: () => import(/* webpackChunkName: "blog" */ '../views/Blog.vue'),

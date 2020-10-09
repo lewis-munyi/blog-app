@@ -71,9 +71,12 @@ export default {
 					.post('user/signin', this.form)
 					.then(res => {
 						// Login successful
-						let { name, email, social, photo } = res.data.user
+						let { name, email, social, photo, _id } = res.data.user
 						localStorage.setItem('auth_token', res.data.token)
-						localStorage.setItem('user', JSON.stringify({ name, email, social, photo }))
+						localStorage.setItem(
+							'user',
+							JSON.stringify({ name, email, social, photo, _id })
+						)
 						location.reload()
 					})
 					.catch(err => {
