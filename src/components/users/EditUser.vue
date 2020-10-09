@@ -1,17 +1,14 @@
 <template>
-  <div>
-      hello edit user
-  </div>
+	<div>
+		hello edit user
+	</div>
 </template>
 
 <script>
 export default {
-   name: "EditUser",
-   components: {}
-   
+	name: 'EditUser',
+	components: {},
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

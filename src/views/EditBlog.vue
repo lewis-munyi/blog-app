@@ -1,17 +1,14 @@
 <template>
-  <div>
-      Edit this blog
-  </div>
+	<div>
+		Edit this blog
+	</div>
 </template>
 
 <script>
 export default {
-   name: "EditBlog",
-   components: {}
-   
+	name: 'EditBlog',
+	components: {},
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

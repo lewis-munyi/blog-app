@@ -1,17 +1,14 @@
 <template>
-  <div>
-      Create a new blog
-  </div>
+	<div>
+		Create a new blog
+	</div>
 </template>
 
 <script>
 export default {
-   name: "CreateBlog",
-   components: {}
-   
+	name: 'CreateBlog',
+	components: {},
 }
 </script>
 
-<style>
-
-</style>
+<style></style>
