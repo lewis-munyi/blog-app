@@ -52,8 +52,8 @@ export default {
 	data() {
 		return {
 			form: {
-				email: 'gladys@is.co.ke',
-				password: 'password',
+				email: null,
+				password: null,
 			},
 		}
 	},

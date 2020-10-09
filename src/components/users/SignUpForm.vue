@@ -114,12 +114,12 @@ export default {
 	data() {
 		return {
 			form: {
-				firstname: 'John',
-				lastname: 'Doe',
-				email: 'john@is.co.ke',
-				password: 'password',
-				repeatPassword: 'password',
-				photo: 'https://api.adorable.io/avatars/512/abott@adorable',
+				firstname: null,
+				lastname: null,
+				email: null,
+				password: null,
+				repeatPassword: null,
+				photo: null,
 			},
 		}
 	},
