@@ -15,4 +15,10 @@
 
 <style lang="scss">
 	@import url('assets/css/bootstrap.min.css');
+	.btn-ripple {
+		display: inline-block;
+		position: relative;
+		overflow: hidden;
+		transition: all ease-in-out 0.5s;
+	}
 </style>

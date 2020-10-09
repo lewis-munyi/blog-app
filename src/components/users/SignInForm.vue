@@ -28,7 +28,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-8 d-flex justify-content-center offset-md-3">
-						<a v-on:click="login" @submit.prevent class="btn btn-primary mt-3">
+						<a v-on:click="login" @submit.prevent class="btn btn-ripple btn-primary mt-3">
 							Submit
 						</a>
 					</div>

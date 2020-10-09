@@ -63,8 +63,8 @@
 							<SignUpForm v-on:child-to-parent="toggleSignIn" v-else />
 						</div>
 						<div class="modal-footer align-left">
-							<a href="#" @click="toggleSignIn" v-if="isSignIn == true" class="btn btn-sm btn-outline-secondary">or Sign Up</a>
-							<a href="#" @click="toggleSignIn" v-else class="btn btn-sm btn-outline-secondary">or Sign In</a>
+							<a href="#" @click="toggleSignIn" v-if="isSignIn == true" class="btn btn-ripple btn-sm btn-outline-secondary">or Sign Up</a>
+							<a href="#" @click="toggleSignIn" v-else class="btn btn-ripple btn-sm btn-outline-secondary">or Sign In</a>
 						</div>
 					</div>
 				</div>
