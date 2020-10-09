@@ -10,26 +10,17 @@
 			<div class="card-body">
 				<h4 class="card-title">{{ title }}</h4>
 				<small class="pb-2">
-					{{ timestamp }} &bull; By
-					<router-link :to="{ name: 'Blog', params: { authorID } }">{{
-						author
-					}}</router-link> </small
+					{{ timestamp }} &bull; By <router-link :to="{ name: 'Blog', params: { authorID } }">{{ author }}</router-link> </small
 				><br />
 				<p class="card-text">
 					{{ brief }}
 				</p>
 
 				<div class="d-flex justify-content-between">
-					<a href="#" class="btn btn-primary"
-						>Read <i class="ml-1 fas fa-chevron-right"></i
-					></a>
+					<a href="#" class="btn btn-primary">Read <i class="ml-1 fas fa-chevron-right"></i></a>
 					<div v-if="isAuthor">
-						<a href="#" class="btn btn-sm btn-secondary mr-2"
-							><i class="fas fa-edit"></i
-						></a>
-						<a @click="deletePost(postID)" class="btn btn-sm btn-danger"
-							><i class=" fas fa-trash"></i
-						></a>
+						<a href="#" class="btn btn-sm btn-secondary mr-2"><i class="fas fa-edit"></i></a>
+						<a @click="deletePost(postID)" class="btn btn-sm btn-danger"><i class=" fas fa-trash"></i></a>
 					</div>
 				</div>
 			</div>
@@ -38,43 +29,43 @@
 </template>
 
 <script>
-export default {
-	name: 'BlogCard',
-	props: {
-		title: String,
-		brief: String,
-		author: String,
-		postID: String,
-		authorID: String,
-		timestamp: String,
-		cover: String,
-	},
-	data() {
-		return {
-			isAuthor: false,
-		}
-	},
-	methods: {
-		deletePost(id) {
-			// console.log("deleting " + id);
-			this.$axios.delete('/posts/' + id).then(res => {
-				console.log(res.data.message)
-				this.$emit('update-posts')
-			})
+	export default {
+		name: 'BlogCard',
+		props: {
+			title: String,
+			brief: String,
+			author: String,
+			postID: String,
+			authorID: String,
+			timestamp: String,
+			cover: String,
 		},
-	},
-	mounted() {
-		if (localStorage.user) {
-			if (JSON.parse(localStorage.getItem('user'))?._id == this.authorID) {
-				this.isAuthor = true
+		data() {
+			return {
+				isAuthor: false,
 			}
-		}
-	},
-}
+		},
+		methods: {
+			deletePost(id) {
+				// console.log("deleting " + id);
+				this.$axios.delete('/posts/' + id).then(res => {
+					console.log(res.data.message)
+					this.$emit('update-posts')
+				})
+			},
+		},
+		mounted() {
+			if (localStorage.user) {
+				if (JSON.parse(localStorage.getItem('user'))?._id == this.authorID) {
+					this.isAuthor = true
+				}
+			}
+		},
+	}
 </script>
 
 <style scoped>
-img {
-	height: 200px;
-}
+	img {
+		height: 200px;
+	}
 </style>

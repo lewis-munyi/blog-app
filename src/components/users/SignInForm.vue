@@ -15,9 +15,7 @@
 							placeholder="Enter email"
 							v-model="form.email"
 						/>
-						<small id="emailHelp" class="form-text text-muted"
-							>We'll never share your email with anyone else.</small
-						>
+						<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
 					</div>
 				</div>
 				<div class="row form-group">
@@ -25,13 +23,7 @@
 						<label for="password">Password</label>
 					</div>
 					<div class="col col-sm-12 col-md-8">
-						<input
-							type="password"
-							class="form-control"
-							id="password"
-							placeholder="Password"
-							v-model="form.password"
-						/>
+						<input type="password" class="form-control" id="password" placeholder="Password" v-model="form.password" />
 					</div>
 				</div>
 				<div class="row">
@@ -47,45 +39,42 @@
 </template>
 
 <script>
-export default {
-	name: 'SignInForm',
-	data() {
-		return {
-			form: {
-				email: null,
-				password: null,
-			},
-		}
-	},
-	methods: {
-		login() {
-			// Make sure all fields are filled
-			if (this.form.password == null || this.form.email == null) {
-				console.log('Fill in all fields')
-			}
-			// Ensure correct email format
-			else if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.form.email)) {
-				console.log('Enter correct email format')
-			} else {
-				this.$axios
-					.post('user/signin', this.form)
-					.then(res => {
-						// Login successful
-						let { name, email, social, photo, _id } = res.data.user
-						localStorage.setItem('auth_token', res.data.token)
-						localStorage.setItem(
-							'user',
-							JSON.stringify({ name, email, social, photo, _id })
-						)
-						location.reload()
-					})
-					.catch(err => {
-						console.log(err)
-					})
+	export default {
+		name: 'SignInForm',
+		data() {
+			return {
+				form: {
+					email: null,
+					password: null,
+				},
 			}
 		},
-	},
-}
+		methods: {
+			login() {
+				// Make sure all fields are filled
+				if (this.form.password == null || this.form.email == null) {
+					console.log('Fill in all fields')
+				}
+				// Ensure correct email format
+				else if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.form.email)) {
+					console.log('Enter correct email format')
+				} else {
+					this.$axios
+						.post('user/signin', this.form)
+						.then(res => {
+							// Login successful
+							let { name, email, social, photo, _id } = res.data.user
+							localStorage.setItem('auth_token', res.data.token)
+							localStorage.setItem('user', JSON.stringify({ name, email, social, photo, _id }))
+							location.reload()
+						})
+						.catch(err => {
+							console.log(err)
+						})
+				}
+			},
+		},
+	}
 </script>
 
 <style></style>

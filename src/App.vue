@@ -4,15 +4,15 @@
 </template>
 
 <script>
-import NavBar from '@/components/NavBar.vue'
-export default {
-	name: 'App',
-	components: {
-		NavBar,
-	},
-}
+	import NavBar from '@/components/NavBar.vue'
+	export default {
+		name: 'App',
+		components: {
+			NavBar,
+		},
+	}
 </script>
 
 <style lang="scss">
-@import url('assets/css/bootstrap.min.css');
+	@import url('assets/css/bootstrap.min.css');
 </style>

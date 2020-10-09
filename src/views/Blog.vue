@@ -20,13 +20,7 @@
 					<p class="text" v-else-if="user">
 						{{ user.social ? 'Feel reach out to them from the link below' : '' }}
 					</p>
-					<a
-						v-if="user"
-						:href="user.social || '#'"
-						target="_blank"
-						class="action btn btn-info"
-						>Contact me</a
-					>
+					<a v-if="user" :href="user.social || '#'" target="_blank" class="action btn btn-info">Contact me</a>
 				</div>
 			</div>
 			<!-- scroll-down -->
@@ -58,155 +52,148 @@
 </template>
 
 <script>
-import BlogCard from '@/components/BlogCard.vue'
-export default {
-	name: 'Blog',
-	components: {
-		BlogCard,
-	},
-	data() {
-		return {
-			isEmpty: true,
-			isLoading: true,
-			posts: null,
-			user: null,
-			error: null,
-		}
-	},
-	methods: {
-		fetchPosts() {
-			this.$axios
-				.get('/posts/all/' + this.$route.params.id)
-				.then(data => {
-					if (data.status == 404) {
-						return this.isEmpty == false
-					}
-					this.isLoading = false
-					this.posts = data.data.posts
-					this.user = data.data.user
-					console.log(this.posts)
-				})
-				.catch(e => {
-					this.isLoading = false
-					this.error = e.message
-					console.error(e.message)
-				})
+	import BlogCard from '@/components/BlogCard.vue'
+	export default {
+		name: 'Blog',
+		components: {
+			BlogCard,
 		},
-	},
-	mounted() {
-		console.log(this.$route.params.id)
-
-		this.fetchPosts()
-	},
-}
+		data() {
+			return {
+				isEmpty: true,
+				isLoading: true,
+				posts: null,
+				user: null,
+				error: null,
+			}
+		},
+		methods: {
+			fetchPosts() {
+				this.$axios
+					.get('/posts/all/' + this.$route.params.id)
+					.then(data => {
+						if (data.status == 404) {
+							return this.isEmpty == false
+						}
+						this.isLoading = false
+						this.posts = data.data.posts
+						this.user = data.data.user
+					})
+					.catch(e => {
+						this.isLoading = false
+						this.error = e.message
+						console.error(e.message)
+					})
+			},
+		},
+		mounted() {
+			this.fetchPosts()
+		},
+	}
 </script>
 <style lang="scss" scoped>
-.header {
-	position: relative;
-	width: 100%;
-	height: 500px;
-}
-.header .center {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 90%;
-	transform: translate(-50%, -50%);
-	z-index: 5;
-	padding: 1rem;
-}
-.header .left {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 90%;
-	transform: translate(-50%, -50%);
-	z-index: 5;
-	padding: 1rem;
-}
-.header .right {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 90%;
-	transform: translate(-50%, -50%);
-	z-index: 5;
-	padding: 1rem;
-}
-.header .scroll {
-	position: absolute;
-	top: 95%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	color: #fff;
-	font-size: 1.5rem;
-}
-/*=== Large devices (desktops, 992px and up) ===*/
-@media (min-width: 992px) {
+	.header {
+		position: relative;
+		width: 100%;
+		height: 500px;
+	}
 	.header .center {
-		width: 50%;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 90%;
+		transform: translate(-50%, -50%);
+		z-index: 5;
+		padding: 1rem;
 	}
 	.header .left {
 		position: absolute;
-		top: 20%;
-		left: 10%;
-		width: 40%;
-		height: 60%;
-		transform: translate(0, 0);
+		top: 50%;
+		left: 50%;
+		width: 90%;
+		transform: translate(-50%, -50%);
+		z-index: 5;
 		padding: 1rem;
 	}
 	.header .right {
 		position: absolute;
-		top: 20%;
+		top: 50%;
 		left: 50%;
-		width: 40%;
-		height: 60%;
-		transform: translate(0, 0);
+		width: 90%;
+		transform: translate(-50%, -50%);
+		z-index: 5;
 		padding: 1rem;
 	}
-}
-#header {
-	background: #355c7d;
-	background:
-    /* gradient overlay */ linear-gradient(
-			to bottom,
-			rgba(203, 53, 107, 0.6),
-			/* #cb356b */ rgba(189, 63, 50, 0.5) /* #bd3f32 */
-		),
-		left top;
-	background-size: cover;
-	z-index: 0;
-}
-#header .caption {
-	text-align: center;
-	color: #fff;
-}
-#header .caption .title {
-	margin-bottom: 1.5rem;
-}
-#header .caption .text {
-	margin-bottom: 1.5rem;
-}
-#header .caption .action {
-	margin-bottom: 1rem;
-	padding-left: 3rem;
-	padding-right: 3rem;
-	border-radius: 15px;
-}
-
-.blog {
-	padding: 50px;
-
-	.container {
-		.row {
-			.col-sm-4 {
-				padding-top: 20px;
-				padding-bottom: 20px;
-			}
+	.header .scroll {
+		position: absolute;
+		top: 95%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		color: #fff;
+		font-size: 1.5rem;
+	}
+	/*=== Large devices (desktops, 992px and up) ===*/
+	@media (min-width: 992px) {
+		.header .center {
+			width: 50%;
+		}
+		.header .left {
+			position: absolute;
+			top: 20%;
+			left: 10%;
+			width: 40%;
+			height: 60%;
+			transform: translate(0, 0);
+			padding: 1rem;
+		}
+		.header .right {
+			position: absolute;
+			top: 20%;
+			left: 50%;
+			width: 40%;
+			height: 60%;
+			transform: translate(0, 0);
+			padding: 1rem;
 		}
 	}
-	.card-title {
-		margin-bottom: 0.25rem;
+	#header {
+		background: #355c7d;
+		background:
+    /* gradient overlay */ linear-gradient(to bottom, rgba(203, 53, 107, 0.6), /* #cb356b */ rgba(189, 63, 50, 0.5) /* #bd3f32 */),
+			left top;
+		background-size: cover;
+		z-index: 0;
 	}
-}
+	#header .caption {
+		text-align: center;
+		color: #fff;
+	}
+	#header .caption .title {
+		margin-bottom: 1.5rem;
+	}
+	#header .caption .text {
+		margin-bottom: 1.5rem;
+	}
+	#header .caption .action {
+		margin-bottom: 1rem;
+		padding-left: 3rem;
+		padding-right: 3rem;
+		border-radius: 15px;
+	}
+
+	.blog {
+		padding: 50px;
+
+		.container {
+			.row {
+				.col-sm-4 {
+					padding-top: 20px;
+					padding-bottom: 20px;
+				}
+			}
+		}
+		.card-title {
+			margin-bottom: 0.25rem;
+		}
+	}
 </style>

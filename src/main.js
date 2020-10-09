@@ -14,9 +14,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.baseURL = 'http://localhost:3000/'
 
 //Set Bearer token if token exists
-localStorage.auth_token
-	? (axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.auth_token)
-	: ''
+localStorage.auth_token ? (axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.auth_token) : ''
 
 // Initialize vue app and make axios available globally
 const app = createApp(App)

@@ -5,10 +5,10 @@
 </template>
 
 <script>
-export default {
-	name: 'EditBlog',
-	components: {},
-}
+	export default {
+		name: 'EditBlog',
+		components: {},
+	}
 </script>
 
 <style></style>
