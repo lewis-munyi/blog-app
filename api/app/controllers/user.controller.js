@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 const jwt_decode = require('jwt-decode')
 
 exports.create = (req, res) => {
-	const { firstname, lastname, email, password, photo, social } = req.body
+	const { firstname, lastname, email, password, photo, social, banner } = req.body
 
 	if (!firstname || !lastname || !email || !password) {
 		return res.status(400).send({
@@ -26,6 +26,7 @@ exports.create = (req, res) => {
 					photo:
 						photo ||
 						`https://ui-avatars.com/api/?name=${firstname}+${lastname}?size=512`,
+					banner: banner || 'https://source.unsplash.com/random/1920x1080',
 				})
 
 				user.save()
@@ -90,7 +91,7 @@ exports.signin = (req, res) => {
 }
 
 exports.update = (req, res) => {
-	const { firstname, lastname, email, password, photo, social } = req.body.user
+	const { firstname, lastname, email, password, photo, social, banner } = req.body.user
 
 	const user = jwt_decode(req.headers.authorization.split(' ')[1]).user._id
 
@@ -109,6 +110,7 @@ exports.update = (req, res) => {
 			name: firstname.concat(' ', lastname),
 			social: social || '',
 			photo: photo || `https://ui-avatars.com/api/?name=${firstname}+${lastname}?size=512`,
+			banner: banner || 'https://source.unsplash.com/random/1920x1080',
 		},
 		{ new: true } // Return the updated
 	)

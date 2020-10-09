@@ -1,11 +1,19 @@
 <template>
 	<div>
 		<!-- header -->
-		<header class="header" id="header">
+		<header
+			class="header"
+			id="header"
+			:style="
+				user && user.banner
+					? 'background: url(\'' + user.banner + '\') no-repeat'
+					: 'background url(\'https://cdn.stocksnap.io/img-thumbs/960w/VPYPAS4FVT.jpg\') no-repeat'
+			"
+		>
 			<div class="center">
 				<div class="caption">
 					<h2 v-if="isLoading == false" class="title display-3">
-						{{ user ? user.name : '' }}
+						{{ user ? user.name.split(' ')[0] + "'s blog" : '' }}
 					</h2>
 					<p class="text" v-if="error !== null">{{ error }}</p>
 					<p class="text" v-if="isLoading">Loading...</p>
@@ -27,7 +35,12 @@
 		<section class="blog">
 			<div class="container">
 				<div class="row">
+					<div class="col-sm-12" v-if="!isLoading && posts && posts.length == 0">
+						No posts found for this user
+					</div>
 					<BlogCard
+						v-else
+						v-on:update-posts="fetchPosts"
 						v-for="post in posts"
 						:key="post._id"
 						:title="post.title"
@@ -60,25 +73,30 @@ export default {
 			error: null,
 		}
 	},
+	methods: {
+		fetchPosts() {
+			this.$axios
+				.get('/posts/all/' + this.$route.params.id)
+				.then(data => {
+					if (data.status == 404) {
+						return this.isEmpty == false
+					}
+					this.isLoading = false
+					this.posts = data.data.posts
+					this.user = data.data.user
+					console.log(this.posts)
+				})
+				.catch(e => {
+					this.isLoading = false
+					this.error = e.message
+					console.error(e.message)
+				})
+		},
+	},
 	mounted() {
 		console.log(this.$route.params.id)
-		// if (!this.$route.params.id) return
-		this.$axios
-			.get('/posts/all/' + this.$route.params.id)
-			.then(data => {
-				if (data.status == 404) {
-					return this.isEmpty == false
-				}
-				this.isLoading = false
-				this.posts = data.data.posts
-				this.user = data.data.user
-				console.log(this.posts)
-			})
-			.catch(e => {
-				this.isLoading = false
-				this.error = e.message
-				console.error(e.message)
-			})
+
+		this.fetchPosts()
 	},
 }
 </script>
@@ -155,8 +173,7 @@ export default {
 			rgba(203, 53, 107, 0.6),
 			/* #cb356b */ rgba(189, 63, 50, 0.5) /* #bd3f32 */
 		),
-		/* bottom image */ url('https://cdn.stocksnap.io/img-thumbs/960w/VPYPAS4FVT.jpg') no-repeat
-			left top;
+		left top;
 	background-size: cover;
 	z-index: 0;
 }

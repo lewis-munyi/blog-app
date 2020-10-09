@@ -80,7 +80,7 @@
 				</div>
 				<div class=" row form-group">
 					<div class="col col-sm-12 col-md-4">
-						<label for="email">Social Media</label>
+						<label for="social">Social Media</label>
 					</div>
 					<div class="col col-sm-12 col-md-8">
 						<input
@@ -98,7 +98,7 @@
 				</div>
 				<div class=" row form-group">
 					<div class="col col-sm-12 col-md-4">
-						<label for="email">Photo URL</label>
+						<label for="photo">Photo URL</label>
 					</div>
 					<div class="col col-sm-12 col-md-8">
 						<input
@@ -111,6 +111,24 @@
 						/>
 						<small id="photoHelp" class="form-text text-muted"
 							>This is not a required field</small
+						>
+					</div>
+				</div>
+				<div class=" row form-group">
+					<div class="col col-sm-12 col-md-4">
+						<label for="banner">Banner URL</label>
+					</div>
+					<div class="col col-sm-12 col-md-8">
+						<input
+							type="text"
+							class="form-control"
+							id="banner"
+							aria-describedby="bannerHelp"
+							placeholder="Enter a valid link to your banner photo"
+							v-model="form.banner"
+						/>
+						<small id="bannerHelp" class="form-text text-muted"
+							>Image will be displayed as your profile background</small
 						>
 					</div>
 				</div>
@@ -138,6 +156,7 @@ export default {
 				password: null,
 				repeatPassword: null,
 				photo: null,
+				banner: null,
 			},
 		}
 	},
