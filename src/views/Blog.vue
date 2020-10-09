@@ -4,14 +4,21 @@
 		<header class="header" id="header">
 			<div class="center">
 				<div class="caption">
-					<h2 class="title display-3">Header title</h2>
-					<p class="text">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum ea accusamus
-						enim hic, itaque eius quibusdam maxime veritatis maiores, ipsum porro
-						bseatae. Quisquam deleniti maxime velit tempora, molestias corrupti iusto!
+					<h2 v-if="isLoading == false" class="title display-3">
+						{{ user ? user.name : '' }}
+					</h2>
+					<p class="text" v-if="error !== null">{{ error }}</p>
+					<p class="text" v-if="isLoading">Loading...</p>
+					<p class="text" v-else-if="user">
+						{{ user.social ? 'Feel reach out to them from the link below' : '' }}
 					</p>
-					<button class="action btn btn-primary">click me</button>
-					<button class="action btn btn-Light">click me</button>
+					<a
+						v-if="user"
+						:href="user.social || '#'"
+						target="_blank"
+						class="action btn btn-info"
+						>Contact me</a
+					>
 				</div>
 			</div>
 			<!-- scroll-down -->
@@ -25,11 +32,11 @@
 						:key="post._id"
 						:title="post.title"
 						:brief="post.brief"
-						:author="author"
+						:author="post.author"
 						:postID="post._id"
 						:authorID="post.author_id"
 						:timestamp="post.updatedAt"
-						:cover='post.cover'
+						:cover="post.cover"
 					/>
 				</div>
 			</div>
@@ -47,7 +54,10 @@ export default {
 	data() {
 		return {
 			isEmpty: true,
+			isLoading: true,
 			posts: null,
+			user: null,
+			error: null,
 		}
 	},
 	mounted() {
@@ -59,10 +69,14 @@ export default {
 				if (data.status == 404) {
 					return this.isEmpty == false
 				}
-				this.posts = data.data
+				this.isLoading = false
+				this.posts = data.data.posts
+				this.user = data.data.user
 				console.log(this.posts)
 			})
 			.catch(e => {
+				this.isLoading = false
+				this.error = e.message
 				console.error(e.message)
 			})
 	},
