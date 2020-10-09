@@ -115,7 +115,6 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
 	const user = jwt_decode(req.headers.authorization.split(' ')[1]).user._id
-	// Todo: Delete all posts
 	Post.deleteMany({ author_id: user }).catch(error => {
 		return res.status(500).send({ message: 'Error deleting your posts' + error.message })
 	})
@@ -139,4 +138,9 @@ exports.delete = (req, res) => {
 				message: 'An internal error occurred while deleting you. Try again later',
 			})
 		})
+}
+
+exports.verify = (req, res) => {
+	// Verify auth token is still valid
+	return res.status(200).send({ message: 'ok' })
 }
