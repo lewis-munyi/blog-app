@@ -13,22 +13,36 @@ exports.create = (req, res) => {
 		})
 	}
 
-	const user = new User({
-		email,
-		password,
-		name: firstname.concat(' ', lastname),
-		social: social || '',
-		photo: photo || `https://ui-avatars.com/api/?name=${firstname}+${lastname}?size=512`,
-	})
-
-	user.save()
+	User.findOne({ email })
 		.then(user => {
-			res.send(user)
+			// Successful request
+			if (!user) {
+				// No user
+				const user = new User({
+					email,
+					password,
+					name: firstname.concat(' ', lastname),
+					social: social || '',
+					photo:
+						photo ||
+						`https://ui-avatars.com/api/?name=${firstname}+${lastname}?size=512`,
+				})
+
+				user.save()
+					.then(user => {
+						return res.send(user)
+					})
+					.catch(error => {
+						res.status(error.status).send({
+							message: error.message,
+						})
+					})
+			} else {
+				return res.status(409).send({ message: 'User already exists' })
+			}
 		})
-		.catch(error => {
-			res.status(error.status).send({
-				message: error.message,
-			})
+		.catch(err => {
+			return res.status(500).send({ message: err.message })
 		})
 }
 
@@ -115,7 +129,6 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
 	const user = jwt_decode(req.headers.authorization.split(' ')[1]).user._id
-	// Todo: Delete all posts
 	Post.deleteMany({ author_id: user }).catch(error => {
 		return res.status(500).send({ message: 'Error deleting your posts' + error.message })
 	})
@@ -139,4 +152,9 @@ exports.delete = (req, res) => {
 				message: 'An internal error occurred while deleting you. Try again later',
 			})
 		})
+}
+
+exports.verify = (req, res) => {
+	// Verify auth token is still valid
+	return res.status(200).send({ message: 'ok' })
 }
