@@ -1,20 +1,20 @@
 <template>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="#">Navbar</a>
 		<button
 			class="navbar-toggler"
 			type="button"
 			data-toggle="collapse"
-			data-target="#navbarColor02"
-			aria-controls="navbarColor02"
+			data-target="#navbar"
+			aria-controls="navbar"
 			aria-expanded="false"
 			aria-label="Toggle navigation"
 		>
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
-		<div class="collapse navbar-collapse" id="navbarColor02">
-			<ul class="navbar-nav mr-auto">
+		<div class="collapse navbar-collapse" id="navbar">
+			<ul class="navbar-nav mr-auto align-left">
 				<li class="nav-item active">
 					<router-link class="nav-link" to="/"
 						>Home <span class="sr-only">(current)</span></router-link
@@ -23,22 +23,7 @@
 				<li class="nav-item">
 					<router-link class="nav-link" to="/about">About</router-link>
 				</li>
-				<li class="nav-item">
-					<router-link class="nav-link" to="/test">Test</router-link>
-				</li>
-				<li class="nav-item">
-		
-					<router-link class="nav-link" to="/blog">Blog</router-link>
-				</li>
-				<li class="nav-item">
-		
-					<router-link class="nav-link" to="/edit">Edit Blog</router-link>
-				</li>
-				<li class="nav-item">
-		
-					<router-link class="nav-link" to="/create">Create Blog</router-link>
-				</li>
-				<li class="nav-item dropdown">
+				<!-- <li class="nav-item dropdown">
 					<a
 						class="nav-link dropdown-toggle"
 						data-toggle="dropdown"
@@ -46,7 +31,7 @@
 						role="button"
 						aria-haspopup="true"
 						aria-expanded="false"
-						>Dropdown</a
+						>Account</a
 					>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="#">Action</a>
@@ -55,22 +40,110 @@
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="#">Separated link</a>
 					</div>
+				</li> -->
+			</ul>
+			<ul class="navbar-nav mr-2 align-right">
+				<li class="nav-item active" v-if="user == null">
+					<a class="nav-link" href="#" @click="showSignInModal">
+						Sign In <span class="sr-only"></span>
+					</a>
+				</li>
+				<li class="nav-item dropdown" v-else>
+					<a
+						class="nav-link dropdown-toggle"
+						data-toggle="dropdown"
+						href="#"
+						role="button"
+						aria-haspopup="true"
+						aria-expanded="false"
+					>
+						<img id="ppic" :src="user.photo" alt="profile_photo" />
+					</a>
+					<div class="dropdown-menu dropdown-menu-lg-right">
+						<a class="dropdown-item font-weight-bold" href="#"
+							><i class="fas fa-user"></i>{{ user.name }}</a
+						>
+						<a class="dropdown-item" href="#"><i class="fas fa-rss"></i>Blog</a>
+						<a class="dropdown-item" href="#"><i class="fas fa-share"></i>Share</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#" @click="logout">
+							<i class="fas fa-sign-out-alt"></i>Log out
+						</a>
+					</div>
 				</li>
 			</ul>
-			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="text" placeholder="Search" />
-				<button class="btn btn-secondary my-2 my-sm-0" type="submit">
-					Search
-				</button>
-			</form>
+		</div>
+		<!-- Sign in Modal -->
+		<div
+			class="modal fade"
+			id="signInModal"
+			tabindex="-1"
+			aria-labelledby="signInModalLabel"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="signInModalLabel">Sign In</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<SignInForm />
+					</div>
+				</div>
+			</div>
 		</div>
 	</nav>
 </template>
 
 <script>
+import SignInForm from '@/components/users/SignInForm.vue'
+
 export default {
 	name: 'NavBar',
+	components: {
+		SignInForm,
+	},
+	data() {
+		return {
+			user: null,
+		}
+	},
+	methods: {
+		showSignInModal() {
+			window.$('#signInModal').modal('show')
+		},
+		logout() {
+			localStorage.setItem('auth_token', null)
+			localStorage.setItem('user', null)
+			location.reload()
+		},
+	},
+	mounted() {
+		if (localStorage.getItem('auth_token')) {
+			this.user = JSON.parse(localStorage.user)
+		}
+	},
+	watch: {
+		user(newUser) {
+			localStorage.user = JSON.stringify(newUser)
+		},
+	},
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+// Profile pic dimensions
+#ppic {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}
+
+// Add icon padding
+.dropdown-item i {
+	padding-right: 6px;
+}
+</style>
