@@ -5,13 +5,13 @@
 				:src="cover || 'https://via.placeholder.com/1366x720?text=' + title.split(' ')[0]"
 				class="card-img-top"
 				style="max-height: 15rem"
-				alt="..."
-
+				alt="post cover photo"
 			/>
 			<div class="card-body">
 				<h4 class="card-title">{{ title }}</h4>
 				<small class="pb-2">
-					{{ timestamp }} &bull; By <a href="#">{{ author }}</a> </small
+					{{ timestamp }} &bull; By
+					<a :href="'/user/' + authorID + '/blog'">{{ author }}</a> </small
 				><br />
 				<p class="card-text">
 					{{ brief }}
