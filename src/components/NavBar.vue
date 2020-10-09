@@ -44,8 +44,8 @@
 			</ul>
 			<ul class="navbar-nav mr-2 align-right">
 				<li class="nav-item active" v-if="user == null">
-					<a class="nav-link" href="#" @click="showSignInModal">
-						Sign In <span class="sr-only"></span>
+					<a class="nav-link" href="#" @click="showSignUpModal">
+						{{ isSignIn == true ? 'Sign In' : 'Sign Up' }} <span class="sr-only"></span>
 					</a>
 				</li>
 				<li class="nav-item dropdown" v-else>
@@ -76,21 +76,40 @@
 		<!-- Sign in Modal -->
 		<div
 			class="modal fade"
-			id="signInModal"
+			id="signUpModal"
 			tabindex="-1"
-			aria-labelledby="signInModalLabel"
+			aria-labelledby="signUpModalLabel"
 			aria-hidden="true"
 		>
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="signInModalLabel">Sign In</h5>
+						<h5 class="modal-title" id="signUpModalLabel">
+							{{ isSignIn == true ? 'Sign In' : 'Sign Up' }}
+						</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body">
-						<SignInForm />
+						<SignInForm v-if="isSignIn == true" />
+						<SignUpForm v-on:child-to-parent="toggleSignIn" v-else />
+					</div>
+					<div class="modal-footer align-left">
+						<a
+							href="#"
+							@click="toggleSignIn"
+							v-if="isSignIn == true"
+							class="btn btn-sm btn-outline-secondary"
+							>or Sign Up</a
+						>
+						<a
+							href="#"
+							@click="toggleSignIn"
+							v-else
+							class="btn btn-sm btn-outline-secondary"
+							>or Sign In</a
+						>
 					</div>
 				</div>
 			</div>
@@ -100,20 +119,30 @@
 
 <script>
 import SignInForm from '@/components/users/SignInForm.vue'
+import SignUpForm from '@/components/users/SignUpForm.vue'
 
 export default {
 	name: 'NavBar',
 	components: {
 		SignInForm,
+		SignUpForm,
 	},
 	data() {
 		return {
 			user: null,
+			isSignIn: false,
 		}
 	},
 	methods: {
-		showSignInModal() {
-			window.$('#signInModal').modal('show')
+		showSignUpModal() {
+			window.$('#signUpModal').modal({
+				keyboard: false,
+				backdrop: 'static',
+			})
+			window.$('#signUpModal').modal('show')
+		},
+		toggleSignIn() {
+			this.isSignIn = !this.isSignIn
 		},
 		logout() {
 			localStorage.setItem('auth_token', null)
