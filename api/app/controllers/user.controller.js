@@ -13,22 +13,36 @@ exports.create = (req, res) => {
 		})
 	}
 
-	const user = new User({
-		email,
-		password,
-		name: firstname.concat(' ', lastname),
-		social: social || '',
-		photo: photo || `https://ui-avatars.com/api/?name=${firstname}+${lastname}?size=512`,
-	})
-
-	user.save()
+	User.findOne({ email })
 		.then(user => {
-			res.send(user)
+			// Successful request
+			if (!user) {
+				// No user
+				const user = new User({
+					email,
+					password,
+					name: firstname.concat(' ', lastname),
+					social: social || '',
+					photo:
+						photo ||
+						`https://ui-avatars.com/api/?name=${firstname}+${lastname}?size=512`,
+				})
+
+				user.save()
+					.then(user => {
+						return res.send(user)
+					})
+					.catch(error => {
+						res.status(error.status).send({
+							message: error.message,
+						})
+					})
+			} else {
+				return res.status(409).send({ message: 'User already exists' })
+			}
 		})
-		.catch(error => {
-			res.status(error.status).send({
-				message: error.message,
-			})
+		.catch(err => {
+			return res.status(500).send({ message: err.message })
 		})
 }
 
