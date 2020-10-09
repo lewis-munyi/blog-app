@@ -20,7 +20,7 @@
 					<a href="#" class="btn btn-ripple btn-primary">Read <i class="ml-1 fas fa-chevron-right"></i></a>
 					<div>
 						<a class="btn btn-ripple btn-sm btn-info rounded-circle" @click="share(title, brief, postID)"><i class="fas fa-share"></i></a>
-						<a v-if="isAuthor" href="#" class="btn btn-ripple btn-sm btn-secondary mr-2"><i class="fas fa-edit"></i></a>
+						<a v-if="isAuthor" href="#" class="btn btn-ripple btn-sm btn-secondary ml-2 mr-2"><i class="fas fa-edit"></i></a>
 						<a v-if="isAuthor" @click="deletePost(postID)" class="btn btn-ripple btn-sm btn-danger"><i class=" fas fa-trash"></i></a>
 					</div>
 				</div>
