@@ -15,11 +15,7 @@
 			</button>
 
 			<div class="collapse navbar-collapse" id="navbar">
-				<ul class="navbar-nav mr-auto align-left">
-					<li class="nav-item">
-						<router-link class="nav-link" to="/about">About</router-link>
-					</li>
-				</ul>
+				<ul class="navbar-nav mr-auto align-left"></ul>
 				<ul class="navbar-nav mr-2 align-right">
 					<li class="nav-item active" v-if="user == null">
 						<a class="nav-link" href="#" @click="showSignUpModal">
