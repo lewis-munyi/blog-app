@@ -1,15 +1,7 @@
 <template>
 	<div>
 		<!-- header -->
-		<header
-			class="header"
-			id="header"
-			:style="
-				user && user.banner
-					? 'background: url(\'' + user.banner + '\') no-repeat'
-					: 'background url(\'https://cdn.stocksnap.io/img-thumbs/960w/VPYPAS4FVT.jpg\') no-repeat'
-			"
-		>
+		<header class="header" id="header" :style="user && user.banner ? 'background: url(\'' + user.banner + '\') no-repeat;' : ''">
 			<div class="center">
 				<div class="caption">
 					<h2 v-if="isLoading == false" class="title display-3">
@@ -20,13 +12,13 @@
 					<p class="text" v-else-if="user">
 						{{ user.social ? 'Feel reach out to them from the link below' : '' }}
 					</p>
-					<a v-if="user" :href="user.social || '#'" target="_blank" class="action btn btn-info">Contact me</a>
+					<a v-if="user?.social" :href="user.social || '#'" target="_blank" class="action btn btn-primary">Contact</a>
 				</div>
 			</div>
 			<!-- scroll-down -->
-			<i class="scroll fas fa-angle-double-down"></i>
+			<a href="#blog"><i class="scroll fas fa-angle-double-down" href="#blog"></i></a>
 		</header>
-		<section class="blog">
+		<section class="blog" id="blog">
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-12" v-if="!isLoading && posts && posts.length == 0">
@@ -42,7 +34,8 @@
 						:author="post.author"
 						:postID="post._id"
 						:authorID="post.author_id"
-						:timestamp="post.updatedAt"
+						:updatedAt="post.updatedAt"
+						:createdAt="post.createdAt"
 						:cover="post.cover"
 					/>
 				</div>
@@ -86,7 +79,7 @@
 					})
 			},
 		},
-		mounted() {
+		created() {
 			this.fetchPosts()
 		},
 	}
@@ -158,9 +151,9 @@
 	}
 	#header {
 		background: #355c7d;
-		background:
-    /* gradient overlay */ linear-gradient(to bottom, rgba(203, 53, 107, 0.6), /* #cb356b */ rgba(189, 63, 50, 0.5) /* #bd3f32 */),
-			left top;
+		// background: linear-gradient(to bottom, rgba(203, 53, 107, 0.6), /* #cb356b */ rgba(189, 63, 50, 0.5) /* #bd3f32 */),
+		// 	url('https://source.unsplash.com/1_CMoFsPfso/1920x1080') no-repeat, left top;
+		background: url('https://source.unsplash.com/1_CMoFsPfso/1366x768') no-repeat, center top;
 		background-size: cover;
 		z-index: 0;
 	}

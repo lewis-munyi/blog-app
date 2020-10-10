@@ -9,6 +9,9 @@ import './registerServiceWorker'
 window.$ = window.jQuery = require('jquery')
 require('bootstrap/dist/js/bootstrap.bundle')
 
+// Fix tooltips not showing
+window.$('body').tooltip({ selector: '[data-toggle=tooltip]' })
+
 // Set Axios Headers
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.baseURL = 'http://localhost:3000/'

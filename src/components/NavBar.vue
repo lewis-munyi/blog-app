@@ -1,7 +1,7 @@
 <template>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#">Navbar</a>
+			<router-link class="navbar-brand font-family-bold" to="/">Blog</router-link>
 			<button
 				class="navbar-toggler"
 				type="button"
@@ -16,9 +16,6 @@
 
 			<div class="collapse navbar-collapse" id="navbar">
 				<ul class="navbar-nav mr-auto align-left">
-					<li class="nav-item active">
-						<router-link class="nav-link" to="/">Home <span class="sr-only">(current)</span></router-link>
-					</li>
 					<li class="nav-item">
 						<router-link class="nav-link" to="/about">About</router-link>
 					</li>

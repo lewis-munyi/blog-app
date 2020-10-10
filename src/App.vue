@@ -15,6 +15,9 @@
 
 <style lang="scss">
 	@import url('assets/css/bootstrap.min.css');
+	html {
+		scroll-behavior: smooth;
+	}
 	.btn-ripple {
 		display: inline-block;
 		position: relative;
