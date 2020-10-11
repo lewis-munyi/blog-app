@@ -7,7 +7,7 @@
 				style="max-height: 15rem"
 				alt="post cover photo"
 			/>
-			<div class="card-body">
+			<div class="card-body" @click="$router.push({ name: 'Post', params: { id: postID } })">
 				<h4 class="card-title mb-1">{{ title }}</h4>
 				<small>
 					By <router-link :to="{ name: 'Blog', params: { authorID } }">{{ author }}</router-link> </small
@@ -136,16 +136,21 @@
 		--bg-color-light: #f1f7ff;
 		--text-color-hover: #4c5656;
 		--box-shadow-color: rgba(220, 233, 255, 0.48);
+		--hover-card: #f1f7ff;
 	}
 
 	.card {
 		box-shadow: 0 14px 26px rgba(0, 0, 0, 0.04);
 		transition: all 0.3s ease-out;
-
 		max-height: 500px;
+
 		.card-body {
-						overflow: hidden;
-					}
+			overflow: hidden;
+
+			&:hover {
+				background: var(--hover-card);
+			}
+		}
 		&:hover {
 			transform: translateY(-5px) translateX(-5px) scale(1.005) translateZ(0);
 			box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11), 0 24px 46px var(--box-shadow-color);
@@ -162,9 +167,5 @@
 	.card p {
 		font-size: 17px;
 		color: #4c5656;
-	// 	margin-top: 30px;
-	// 	z-index: 1000;
-	// 	transition: color 0.3s ease-out;
 	}
-
 </style>
