@@ -7,12 +7,12 @@
 				style="max-height: 15rem"
 				:alt="title"
 			/>
-			<div class="card-body" @click="$router.push({ name: 'Post', params: { id: postID } })">
-				<h4 class="card-title mb-1">{{ title }}</h4>
+			<div class="card-body">
+				<h4 class="card-title mb-1" @click="$router.push({ name: 'Post', params: { id: postID } })">{{ title }}</h4>
 				<small>
 					By <router-link :to="{ name: 'Blog', params: { authorID } }">{{ author }}</router-link> </small
 				><br />
-				<p class="card-text mt-2" v-html="brief + '...'"></p>
+				<p class="card-text mt-2" @click="$router.push({ name: 'Post', params: { id: postID } })" v-html="brief + '...'"></p>
 			</div>
 			<div class="card-footer text-muted">
 				<div class="d-flex justify-content-between">
@@ -139,6 +139,7 @@
 			overflow: hidden;
 
 			&:hover {
+				cursor: pointer;
 				background: var(--hover-card);
 			}
 		}
