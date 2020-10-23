@@ -12,7 +12,7 @@
 						{{ user ? user.name.split(' ')[0] + "'s blog" : '' }}
 					</h2>
 					<p class="text" v-if="error !== null">{{ error.status }} | {{ error.message }}</p>
-					<p class="text" v-if="isLoading">Loading...</p>
+					<Loader v-if="isLoading" width="50px" />
 					<p class="text" v-else-if="user">
 						{{ user.social ? 'Feel reach out to them from the link below' : '' }}
 					</p>
@@ -50,10 +50,13 @@
 
 <script>
 	import BlogCard from '@/components/BlogCard.vue'
+	import Loader from '@/components/Loader.vue'
+
 	export default {
 		name: 'Blog',
 		components: {
 			BlogCard,
+			Loader,
 		},
 		data() {
 			return {
@@ -154,7 +157,7 @@
 		}
 	}
 	#header {
-		background: #f2bc02;
+		background: rgba(4, 6, 19, 0.4);
 		// background: linear-gradient(to bottom, rgba(203, 53, 107, 0.6), /* #cb356b */ rgba(189, 63, 50, 0.5) /* #bd3f32 */),
 		transition: all 0.7s ease-in;
 		z-index: 0;
