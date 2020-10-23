@@ -2,10 +2,10 @@
 	<div class="col-sm-12 col-md-6 col-lg-4">
 		<div class="card border-secondary mb-3 blog-card">
 			<img
-				:src="cover || 'https://via.placeholder.com/1366x720/F9D5D4/4C5656?text=' + title.split(' ')[0]"
+				:src="cover || 'https://via.placeholder.com/800x600/E5E5F7/4C5656?text=' + title.split(' ')[0]"
 				class="card-img-top"
 				style="max-height: 15rem"
-				alt="post cover photo"
+				:alt="title"
 			/>
 			<div class="card-body" @click="$router.push({ name: 'Post', params: { id: postID } })">
 				<h4 class="card-title mb-1">{{ title }}</h4>
@@ -16,10 +16,7 @@
 			</div>
 			<div class="card-footer text-muted">
 				<div class="d-flex justify-content-between">
-					<span class="my-auto">
-						{{ createdAt == updatedAt ? `Published: ${formatDates().created}` : `Updated: ${formatDates().updated}` }}</span
-					>
-					<!-- <a href="#" class="btn btn-ripple btn-primary">Read <i class="ml-1 fas fa-chevron-right"></i></a> -->
+					<span class="my-auto"> {{ createdAt == updatedAt ? `Published: ${createdStr}` : `Updated: ${updatedStr}` }}</span>
 					<div>
 						<div class="btn-group dropup">
 							<button
@@ -76,6 +73,20 @@
 				updated: null,
 			}
 		},
+		computed: {
+			updatedStr() {
+				let i = toDate(parseISO(this.updatedAt))
+					.toString()
+					.split(' ')
+				return `${i[2]}-${i[1]}-${i[3]}`
+			},
+			createdStr() {
+				let i = toDate(parseISO(this.createdAt))
+					.toString()
+					.split(' ')
+				return `${i[2]}-${i[1]}-${i[3]}`
+			},
+		},
 		methods: {
 			deletePost(id) {
 				// console.log("deleting " + id);
@@ -83,17 +94,6 @@
 					console.log(res.data.message)
 					this.$emit('update-posts')
 				})
-			},
-			formatDates() {
-				let i = toDate(parseISO(this.updatedAt))
-					.toString()
-					.split(' ')
-				let x = `${i[2]}-${i[1]}-${i[3]}`
-				i = toDate(parseISO(this.createdAt))
-					.toString()
-					.split(' ')
-				let y = `${i[2]}-${i[1]}-${i[3]}`
-				return { created: y, updated: x }
 			},
 			share(title, text, id) {
 				if (navigator.share) {
