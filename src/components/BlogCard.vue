@@ -12,47 +12,38 @@
 				<small>
 					By <router-link :to="{ name: 'Blog', params: { authorID } }">{{ author }}</router-link> </small
 				><br />
-				<p class="card-text mt-2">
-					{{ brief + '...' }}
-				</p>
+				<p class="card-text mt-2" v-html="brief + '...'"></p>
 			</div>
 			<div class="card-footer text-muted">
 				<div class="d-flex justify-content-between">
-					<span class="my-auto"> {{ createdAt == updatedAt ? formatDates().created : 'Updated: ' + formatDates().updated }}</span>
+					<span class="my-auto">
+						{{ createdAt == updatedAt ? `Published: ${formatDates().created}` : `Updated: ${formatDates().updated}` }}</span
+					>
 					<!-- <a href="#" class="btn btn-ripple btn-primary">Read <i class="ml-1 fas fa-chevron-right"></i></a> -->
 					<div>
-						<!-- Split dropup button -->
 						<div class="btn-group dropup">
-							<a
-								class="btn btn-ripple btn-primary"
-								v-bind:class="{ 'rounded-circle btn-sm': !isAuthor }"
-								@click="share(title, brief, postID)"
-								data-toggle="tooltip"
-								data-placement="top"
-								title="Share post"
-								data-original-title="Share post"
-								><i class="fas fa-share"></i
-							></a>
 							<button
-								v-if="isAuthor"
 								type="button"
-								class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
+								class="btn btn-light rounded-circle"
 								data-toggle="dropdown"
 								aria-haspopup="true"
 								aria-expanded="false"
+								title="More"
 							>
-								<span class="sr-only">Toggle Dropdown</span>
+								<i class="fas fa-ellipsis-v"></i>
 							</button>
-							<div class="dropdown-menu">
-								<a class="dropdown-item" href="#"> <i class="fas fa-edit mr-2"></i> Edit post </a>
+							<div class="dropdown-menu dropdown-menu-lg-left dropdown-menu-md-left dropdown-menu-sm-left ">
+								<a class="dropdown-item" @click="share(title, brief, postID)"><i class="fas fa-share-alt mr-2"></i>Share</a>
+								<a v-if="isAuthor" class="dropdown-item"><i class="fas fa-edit mr-2"></i>Edit</a>
+								<div v-show="isAuthor" class="dropdown-divider"></div>
 								<a
+									v-if="isAuthor"
 									@click="deletePost(postID)"
 									class="dropdown-item text-danger"
-									href="#"
 									data-toggle="tooltip"
 									data-placement="left"
 									title="Delete Post Forever"
-									><i class="fas fa-trash mr-2"></i> Delete
+									><i class="fas fa-trash mr-2"></i>Delete
 								</a>
 							</div>
 						</div>
@@ -97,11 +88,11 @@
 				let i = toDate(parseISO(this.updatedAt))
 					.toString()
 					.split(' ')
-				let x = i[1] + ' ' + i[2] + ', ' + i[3]
+				let x = `${i[2]}-${i[1]}-${i[3]}`
 				i = toDate(parseISO(this.createdAt))
 					.toString()
 					.split(' ')
-				let y = i[1] + ' ' + i[2] + ', ' + i[3]
+				let y = `${i[2]}-${i[1]}-${i[3]}`
 				return { created: y, updated: x }
 			},
 			share(title, text, id) {

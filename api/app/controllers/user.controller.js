@@ -23,10 +23,8 @@ exports.create = (req, res) => {
 					password,
 					name: firstname.concat(' ', lastname),
 					social: social || '',
-					photo:
-						photo ||
-						`https://ui-avatars.com/api/?name=${firstname}+${lastname}?size=512`,
-					banner: banner || 'https://source.unsplash.com/random/1920x1080',
+					photo: photo || `https://ui-avatars.com/api/?name=${firstname}+${lastname}?size=512`,
+					banner: banner || 'https://source.unsplash.com/1_CMoFsPfso/1366x768',
 				})
 
 				user.save()

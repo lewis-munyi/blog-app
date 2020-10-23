@@ -1,13 +1,17 @@
 <template>
 	<div>
 		<!-- header -->
-		<header class="header" id="header" :style="user && user.banner ? 'background: url(\'' + user.banner + '\') no-repeat;' : ''">
+		<header
+			class="header"
+			id="header"
+			:style="user && user.banner ? 'background: url(\'' + user.banner + '\') no-repeat; background-size: cover;' : ''"
+		>
 			<div class="center">
 				<div class="caption">
 					<h2 v-if="isLoading == false" class="title display-3">
 						{{ user ? user.name.split(' ')[0] + "'s blog" : '' }}
 					</h2>
-					<p class="text" v-if="error !== null">{{ error }}</p>
+					<p class="text" v-if="error !== null">{{ error.status }} | {{ error.message }}</p>
 					<p class="text" v-if="isLoading">Loading...</p>
 					<p class="text" v-else-if="user">
 						{{ user.social ? 'Feel reach out to them from the link below' : '' }}
@@ -74,7 +78,7 @@
 					})
 					.catch(e => {
 						this.isLoading = false
-						this.error = e.message
+						this.error = { status: e.response.status, message: e.message }
 						console.error(e.message)
 					})
 			},
@@ -150,11 +154,9 @@
 		}
 	}
 	#header {
-		background: #355c7d;
+		background: #f2bc02;
 		// background: linear-gradient(to bottom, rgba(203, 53, 107, 0.6), /* #cb356b */ rgba(189, 63, 50, 0.5) /* #bd3f32 */),
-		// 	url('https://source.unsplash.com/1_CMoFsPfso/1920x1080') no-repeat, left top;
-		background: url('https://source.unsplash.com/1_CMoFsPfso/1366x768') no-repeat, center top;
-		background-size: cover;
+		transition: all 0.7s ease-in;
 		z-index: 0;
 	}
 	#header .caption {

@@ -12,7 +12,7 @@
 						id="firstname"
 						aria-describedby="firstnameHelp"
 						placeholder="Enter First name"
-						v-model="form.firstname"
+						v-model.lazy="form.firstname"
 					/>
 				</div>
 			</div>
@@ -27,7 +27,7 @@
 						id="lastname"
 						aria-describedby="lastnameHelp"
 						placeholder="Enter Last name"
-						v-model="form.lastname"
+						v-model.lazy="form.lastname"
 					/>
 				</div>
 			</div>
@@ -36,7 +36,14 @@
 					<label for="email">Email address</label>
 				</div>
 				<div class="col col-sm-12 col-md-8">
-					<input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" v-model="form.email" />
+					<input
+						type="email"
+						class="form-control"
+						id="email"
+						aria-describedby="emailHelp"
+						placeholder="Enter email"
+						v-model.trim="form.email"
+					/>
 					<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
 				</div>
 			</div>
@@ -45,7 +52,7 @@
 					<label for="password">Password</label>
 				</div>
 				<div class="col col-sm-12 col-md-8">
-					<input type="password" class="form-control" id="password" placeholder="Password" v-model="form.password" />
+					<input type="password" class="form-control" id="password" placeholder="Password" v-model.trim="form.password" />
 				</div>
 			</div>
 			<div class="row form-group">
@@ -53,7 +60,13 @@
 					<label for="repeatPassword">Repeat Password</label>
 				</div>
 				<div class="col col-sm-12 col-md-8">
-					<input type="password" class="form-control" id="repeatPassword" placeholder="Re-enter Password" v-model="form.repeatPassword" />
+					<input
+						type="password"
+						class="form-control"
+						id="repeatPassword"
+						placeholder="Re-enter Password"
+						v-model.trim="form.repeatPassword"
+					/>
 				</div>
 			</div>
 			<div class=" row form-group">
@@ -67,7 +80,7 @@
 						id="social"
 						aria-describedby="socialHelp"
 						placeholder="Enter a valid link to your social media account"
-						v-model="form.social"
+						v-model.lazy="form.social"
 					/>
 					<small id="socialHelp" class="form-text text-muted">This is not a required field</small>
 				</div>
@@ -83,7 +96,7 @@
 						id="photo"
 						aria-describedby="photoHelp"
 						placeholder="Enter a valid link to your profile photo"
-						v-model="form.photo"
+						v-model.lazy="form.photo"
 					/>
 					<small id="photoHelp" class="form-text text-muted">This is not a required field</small>
 				</div>
@@ -99,7 +112,7 @@
 						id="banner"
 						aria-describedby="bannerHelp"
 						placeholder="Enter a valid link to your banner photo"
-						v-model="form.banner"
+						v-model.lazy="form.banner"
 					/>
 					<small id="bannerHelp" class="form-text text-muted">Image will be displayed as your profile background</small>
 				</div>
