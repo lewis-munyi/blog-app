@@ -9,7 +9,7 @@ const protectedRouter = withJWTAuthMiddleware(router, 'yourSecretKey')
 protectedRouter.post('/', post.create)
 
 // Retrieve latest posts
-router.get('/', post.findAll)
+router.get('/all', post.findAll)
 
 // Retrieve a single post by id
 router.get('/:postId', post.findOne)
