@@ -194,7 +194,7 @@
 		font-size: 20px;
 		line-height: 36px;
 		color: #111111;
-		top: 35vh;
+		top: 30vh;
 		left: 12.5vw;
 	}
 	@media (max-width: 500px) {
