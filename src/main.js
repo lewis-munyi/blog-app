@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios'
+import Notifications from 'vue-notification'
 import './registerServiceWorker'
 
 // Import bootstrap, Popper and jquery
@@ -24,6 +25,7 @@ const app = createApp(App)
 app.config.globalProperties.$axios = axios
 app.use(store)
 	.use(router)
+	.use(Notifications)
 	.mount('#app')
 
 // Check if user is still/already authenticated
