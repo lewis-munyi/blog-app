@@ -1,11 +1,11 @@
-console.log("Blog app sstarting..");
-
-const express = require('express')
-const bodyParser = require('body-parser')
+const cors = require('cors')
 const chalk = require('chalk')
+const express = require('express')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
+const serveStatic = require('serve-static')
 const dbConfig = require('./config/database.config')
-var cors = require('cors')
+const expressListRoutes = require('express-list-routes')
 
 const userRouter = require('./app/routes/user.routes')
 const postRouter = require('./app/routes/post.routes')
@@ -20,7 +20,7 @@ mongoose
 		useUnifiedTopology: true,
 	})
 	.then(() => {
-		console.log(chalk.green('Successfully connected to the database'))
+		// console.log(chalk.green('Successfully connected to the database'))
 	})
 	.catch(err => {
 		console.log(chalk.red('Could not connect to the database. Exiting now...', err))
@@ -37,16 +37,17 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // parse requests of content-type - application/json
 app.use(bodyParser.json())
 
-// define a simple route
-app.get('/', (req, res) => {
-	res.json({ message: 'Welcome to our Blog! Browse the docs to see how you could use this api.' })
-})
+app.use('/api/v1/user', userRouter)
+
+app.use('/api/v1/posts', postRouter)
+
+app.use(serveStatic('dist'))
+
+expressListRoutes({ prefix: '/api/v1', spacer: 7 }, '\n\nPost Routes:', postRouter)
+expressListRoutes({ prefix: '/api/v1', spacer: 7 }, '\n\nUser Routes:', userRouter)
 
 // listen for requests
 app.listen(process.env.PORT || 3000, () => {
-	console.log('Server is listening on port 3000')
+	// console.log('\n\n')
+	console.log(`\nServing app on port ${process.env.PORT || 3000}`)
 })
-
-app.use('/user', userRouter)
-
-app.use('/posts', postRouter)
