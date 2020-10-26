@@ -1,6 +1,6 @@
 <template>
 	<NavBar></NavBar>
-	<notifications group="auth" />
+	<!-- <notifications group="auth" /> -->
 	<router-view />
 </template>
 

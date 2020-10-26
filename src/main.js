@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios'
-import Notifications from 'vue-notification'
+// import Notifications from 'vue-notification'
 import './registerServiceWorker'
 
 // Import bootstrap, Popper and jquery
@@ -25,7 +25,7 @@ const app = createApp(App)
 app.config.globalProperties.$axios = axios
 app.use(store)
 	.use(router)
-	.use(Notifications)
+	// .use(Notifications)
 	.mount('#app')
 
 // Check if user is still/already authenticated
@@ -41,8 +41,8 @@ if (localStorage.auth_token) {
 				// console.log(res.data.message)
 			}
 		})
-		.catch(err => {
-			console.log(err.message)
+		.catch(() => {
+			// console.log(err)
 			localStorage.auth_token = null
 			localStorage.user = null
 		})
