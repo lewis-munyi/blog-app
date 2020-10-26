@@ -43,8 +43,8 @@ app.use('/api/v1/posts', postRouter)
 
 app.use(serveStatic('dist'))
 
-expressListRoutes({ prefix: '/api/v1', spacer: 7 }, '\n\nPost Routes:', postRouter )
-expressListRoutes({ prefix: '/api/v1', spacer: 7 }, '\n\nUser Routes:', userRouter )
+expressListRoutes({ prefix: '/api/v1', spacer: 7 }, '\n\nPost Routes:', postRouter)
+expressListRoutes({ prefix: '/api/v1', spacer: 7 }, '\n\nUser Routes:', userRouter)
 
 // listen for requests
 app.listen(process.env.PORT || 3000, () => {
