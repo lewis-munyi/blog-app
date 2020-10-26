@@ -42,11 +42,12 @@ app.use(bodyParser.json())
 // 	res.json({ message: 'Welcome to our Blog! Browse the docs to see how you could use this api.' })
 // })
 
-app.use(serveStatic(path.join(__dirname, 'dist')));
 
 app.use('/api/v1/user', userRouter)
 
 app.use('/api/v1/posts', postRouter)
+
+app.use(serveStatic(path.join(__dirname, 'dist')))
 
 // listen for requests
 app.listen(process.env.PORT || 3000, () => {
