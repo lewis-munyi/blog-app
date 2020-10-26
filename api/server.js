@@ -3,7 +3,9 @@ const bodyParser = require('body-parser')
 const chalk = require('chalk')
 const mongoose = require('mongoose')
 const dbConfig = require('./config/database.config')
-var cors = require('cors')
+const cors = require('cors')
+const serveStatic = require("serve-static")
+const path = require('path');
 
 const userRouter = require('./app/routes/user.routes')
 const postRouter = require('./app/routes/post.routes')
@@ -36,9 +38,11 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 // define a simple route
-app.get('/', (req, res) => {
-	res.json({ message: 'Welcome to our Blog! Browse the docs to see how you could use this api.' })
-})
+// app.get('/', (req, res) => {
+// 	res.json({ message: 'Welcome to our Blog! Browse the docs to see how you could use this api.' })
+// })
+
+app.use(serveStatic(path.join(__dirname, 'dist')));
 
 // listen for requests
 app.listen(process.env.PORT || 3000, () => {
