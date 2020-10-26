@@ -4,8 +4,8 @@ const chalk = require('chalk')
 const mongoose = require('mongoose')
 const dbConfig = require('./config/database.config')
 const cors = require('cors')
-const serveStatic = require("serve-static")
-const path = require('path');
+const serveStatic = require('serve-static')
+const path = require('path')
 
 const userRouter = require('./app/routes/user.routes')
 const postRouter = require('./app/routes/post.routes')
