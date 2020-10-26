@@ -8,7 +8,7 @@
     "url": "https://github.com/lewis-munyi/blog-app"
   },
   "scripts": {
-    "start": "node api\\server.js"
+    "start": "node --prefix api/server.js"
   },
   "dependencies": {
     "axios": "^0.20.0",
