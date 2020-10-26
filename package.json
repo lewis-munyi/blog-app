@@ -12,7 +12,8 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "start": "node ./api/server.js"
+    "start": "node ./api/server.js",
+    "postinstall": "npm run build",
   },
   "dependencies": {
     "axios": "^0.20.0",
