@@ -38,12 +38,12 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 // define a simple route
-// app.get('/', (req, res) => {
-// 	res.json({ message: 'Welcome to our Blog!' })
-// })
+app.get('/', (req, res) => {
+	res.json({ message: 'Welcome to our Blog! Browse the docs to see how you could use this api.' })
+})
 
 // listen for requests
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
 	console.log('Server is listening on port 3000')
 })
 

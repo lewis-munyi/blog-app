@@ -8,6 +8,10 @@
     "url": "https://github.com/lewis-munyi/blog-app"
   },
   "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint",
     "start": "node ./api/server.js"
   },
   "dependencies": {
