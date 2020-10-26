@@ -44,11 +44,12 @@ app.use(bodyParser.json())
 
 app.use(serveStatic(path.join(__dirname, 'dist')));
 
+app.use('/api/v1/user', userRouter)
+
+app.use('/api/v1/posts', postRouter)
+
 // listen for requests
 app.listen(process.env.PORT || 3000, () => {
 	console.log('Server is listening on port 3000')
 })
 
-app.use('/user', userRouter)
-
-app.use('/posts', postRouter)
