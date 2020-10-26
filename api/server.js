@@ -1,5 +1,3 @@
-console.log("Blog app sstarting..");
-
 const express = require('express')
 const bodyParser = require('body-parser')
 const chalk = require('chalk')

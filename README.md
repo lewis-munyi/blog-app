@@ -167,7 +167,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <br>
 <p align="center">
 <img src="https://static.wixstatic.com/media/395902_78de817d298e4ee0afdc1f50dc04d6c4~mv2.png/v1/crop/x_0,y_238,w_1366,h_292/fill/w_454,h_93,al_c,q_85,usm_0.66_1.00_0.01/KamiLimu%20logo2.webp" alt="Logo" >
-</>/
+</>
 
 
 
