@@ -1,4 +1,5 @@
 const Post = require('../models/post.model')
+const User = require('../models/user.model')
 const jwt_decode = require('jwt-decode')
 
 // Create and Save a new Post
@@ -103,7 +104,7 @@ exports.update = (req, res) => {
 			})
 		}
 
-		if (String(post.author_id) !== String(user)){
+		if (String(post.author_id) !== String(user)) {
 			res.status(401).send({
 				message: 'You are not authorized to perform this action!',
 			})
@@ -161,7 +162,7 @@ exports.delete = (req, res) => {
 			})
 		}
 
-		if (String(post.author_id) !== String(user)){
+		if (String(post.author_id) !== String(user)) {
 			res.status(401).send({
 				message: 'You are not authorized to perform this action!',
 			})
@@ -187,6 +188,39 @@ exports.delete = (req, res) => {
 			}
 			return res.status(500).send({
 				message: 'An internal error occurred while deleting the post. Try again later',
+			})
+		})
+}
+
+exports.findBlog = (req, res) => {
+	User.findOne({ _id: req.params.id })
+		.then(user => {
+			// Successful request
+			if (!user) {
+				// No user
+				return res.status(404).send({
+					message: 'User not found',
+				})
+			}
+			Post.find({ author_id: req.params.id })
+				.sort({ _id: -1 })
+				.then(posts => {
+					// Successful request
+					if (!posts) {
+						// No post
+						return res.status(404).send({ user, message: 'No posts found' })
+					}
+					return res.status(200).send({ user, posts })
+				})
+				.catch(err => {
+					return res.status(500).send({
+						message: 'An internal server error occured: ' + err.message,
+					})
+				})
+		})
+		.catch(err => {
+			return res.status(500).send({
+				message: 'An internal server error occured: ' + err.message,
 			})
 		})
 }

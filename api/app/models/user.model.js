@@ -12,6 +12,7 @@ const UserSchema = new mongoose.Schema({
 		require: true,
 	},
 	photo: String,
+	banner: String,
 	social: String,
 	email: {
 		type: String,
