@@ -13,8 +13,8 @@
 			enable-background="new 0 0 0 0"
 			xml:space="preserve"
 		>
-			<circle fill="none" stroke="#444CF7" stroke-width="4" cx="50" cy="50" r="44" style="opacity:0.5;" />
-			<circle fill="#fff" stroke="#e74c3c" stroke-width="3" cx="8" cy="54" r="6">
+			<circle fill="none" stroke="#222" stroke-width="4" cx="50" cy="50" r="44" style="opacity:0.7;" />
+			<circle fill="#fff" stroke="#222" stroke-width="3" cx="8" cy="54" r="6">
 				<animateTransform attributeName="transform" dur="2s" type="rotate" from="0 50 48" to="360 50 52" repeatCount="indefinite" />
 			</circle>
 		</svg>

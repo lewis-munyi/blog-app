@@ -150,9 +150,16 @@
 
 				// Make sure all fields are filled
 				if (Object.values(this.form).some(o => o === null)) {
-					return console.log('Fill in all fields')
+					return this.$toast(`Fill in all the fields!`, {
+						styles: this.$style.danger,
+						slot: `<i class="fas fa-exclamation-triangle"></i>`,
+					})
+					// return console.log('Fill in all fields')
 				} else if (password !== repeatPassword) {
-					return console.error('Passwords do not match')
+					return this.$toast(`Passwords do not merge`, {
+						styles: this.$style.danger,
+						slot: `<i class="fas fa-exclamation-triangle"></i>`,
+					})
 				}
 				// Ensure correct URL format
 				else if (
@@ -160,25 +167,38 @@
 						photo
 					)
 				) {
-					return console.error('Enter correct photo URL')
+					return this.$toast(`Enter correct URL format!`, {
+						styles: this.$style.danger,
+						slot: `<i class="fas fa-exclamation-triangle"></i>`,
+					})
+					// console.error('Enter correct photo URL')
 				}
 				// Ensure correct email format
 				else if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-					console.log('Enter correct email format')
+					return this.$toast(`Enter correct email format!`, {
+						styles: this.$style.danger,
+						slot: `<i class="fas fa-exclamation-triangle"></i>`,
+					})
+					// console.log('Enter correct email format')
 				} else {
 					this.$axios
 						.post('user/signup', this.form)
-						.then(res => {
+						.then(() => {
 							// Signup successful
-							console.log(res.status)
+							// console.log(res.status)
 							// alert('Signup successful! Log in to continue')
-							console.log('Signup successful!')
-							this.$emit('child-to-parent')
+							this.$toast(`Welcome aboard! 😃`, {
+								styles: this.$style.danger,
+								slot: `<i class="fas fa-exclamation-triangle"></i>`,
+							})
+							return this.$emit('child-to-parent')
 							// return location.reload()
 						})
 						.catch(err => {
-							alert('Error! ' + err.message)
-							return console.error(err)
+							return this.$toast(`Error! ${err.message}`, {
+								styles: this.$style.danger,
+								slot: `<i class="fas fa-exclamation-triangle"></i>`,
+							})
 						})
 				}
 			},

@@ -81,6 +81,10 @@
 					})
 					.catch(e => {
 						this.isLoading = false
+						this.$toast(`Error! ${e.message}`, {
+							styles: this.$style.danger,
+							slot: `<i class="fas fa-exclamation-triangle"></i>`,
+						})
 						this.error = { status: e.response.status, message: e.message }
 						console.error(e.message)
 					})
@@ -168,6 +172,7 @@
 	}
 	#header .caption .title {
 		margin-bottom: 1.5rem;
+		color: white;
 	}
 	#header .caption .text {
 		margin-bottom: 1.5rem;

@@ -90,8 +90,12 @@
 		methods: {
 			deletePost(id) {
 				// console.log("deleting " + id);
-				this.$axios.delete('/posts/' + id).then(res => {
-					console.log(res.data.message)
+				this.$axios.delete('/posts/' + id).then(() => {
+					this.$toast(`Post deleted.`, {
+						styles: this.$style.success,
+						slot: `<i class="fas fa-trash-alt"></i>`,
+					})
+					// console.log(res.data.message)
 					this.$emit('update-posts')
 				})
 			},
@@ -101,10 +105,21 @@
 						.share({
 							title,
 							text,
-							url: 'http://localhost:3000/post/' + id,
+							url: 'http://jarida-blog.herokuapp.com/post/' + id,
 						})
-						.then(() => {})
-						.catch(error => console.log('Error sharing', error))
+						.then(() => {
+							this.$toast(`Post shared successfully :D`, {
+								styles: this.$style.success,
+								slot: `<i class="far fa-check-circle"></i>`,
+							})
+						})
+						.catch(error => {
+							this.$toast(`Error sharing post :(`, {
+								styles: this.$style.danger,
+								slot: `<i class="fas fa-exclamation-triangle"></i>`,
+							})
+							console.error('Error sharing', error)
+						})
 				}
 			},
 		},

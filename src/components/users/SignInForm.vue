@@ -53,11 +53,19 @@
 			login() {
 				// Make sure all fields are filled
 				if (this.form.password == null || this.form.email == null) {
-					console.log('Fill in all fields')
+					// console.log('Fill in all fields')
+					this.$toast(`Fill in all the fields`, {
+						styles: this.$style.danger,
+						slot: `<i class="fas fa-exclamation-triangle"></i>`,
+					})
 				}
 				// Ensure correct email format
 				else if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.form.email)) {
-					console.log('Enter correct email format')
+					// console.log('Enter correct email format')
+					this.$toast(`Enter correct email format`, {
+						styles: this.$style.danger,
+						slot: `<i class="fas fa-exclamation-triangle"></i>`,
+					})
 				} else {
 					this.$axios
 						.post('user/signin', this.form)
@@ -66,10 +74,18 @@
 							let { name, email, social, photo, _id } = res.data.user
 							localStorage.setItem('auth_token', res.data.token)
 							localStorage.setItem('user', JSON.stringify({ name, email, social, photo, _id }))
+							this.$toast(`Logged in successfuly!`, {
+								styles: this.$style.success,
+								slot: `<i class="fas fa-circle-check"></i>`,
+							})
 							location.reload()
 						})
 						.catch(err => {
-							console.log(err)
+							this.$toast(`Error! ${err.message}`, {
+								styles: this.$style.danger,
+								slot: `<i class="fas fa-exclamation-triangle"></i>`,
+							})
+							// console.log(err)
 						})
 				}
 			},
