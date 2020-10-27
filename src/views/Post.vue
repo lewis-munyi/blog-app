@@ -55,6 +55,10 @@
 					.get('/posts/' + this.$route.params.id)
 					.then(data => {
 						if (data.status == 404) {
+							this.$toast(`Post not found :(`, {
+								styles: this.$style.info,
+								slot: `<i class="fas fa-search"></i>`,
+							})
 							return this.isEmpty == false
 						}
 						this.isLoading = false
@@ -62,6 +66,10 @@
 					})
 					.catch(e => {
 						this.isLoading = false
+						this.$toast(`Error! ${e.message}`, {
+							styles: this.$style.danger,
+							slot: `<i class="fas fa-exclamation-triangle"></i>`,
+						})
 						this.error = { status: e.response.status, message: e.message }
 						console.error(e.message)
 					})
