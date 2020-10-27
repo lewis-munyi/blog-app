@@ -38,8 +38,7 @@
 </script>
 
 <style lang="scss">
-	@import url('assets/css/bootstrap.min.css');
-	// @import url('https://bootswatch.com/4/lux/bootstrap.min.css');
+	@import url('assets/css/bootstrap.css');
 	html {
 		scroll-behavior: smooth;
 	}

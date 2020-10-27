@@ -172,6 +172,7 @@
 	}
 	#header .caption .title {
 		margin-bottom: 1.5rem;
+		color: white;
 	}
 	#header .caption .text {
 		margin-bottom: 1.5rem;

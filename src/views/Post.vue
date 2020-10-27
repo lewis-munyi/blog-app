@@ -159,6 +159,7 @@
 
 			.title {
 				margin-bottom: 1.5rem;
+				color: white;
 			}
 			.text {
 				margin-bottom: 1.5rem;
