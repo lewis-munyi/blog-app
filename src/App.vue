@@ -11,11 +11,35 @@
 		components: {
 			NavBar,
 		},
+		created() {
+			// Check if user is still/already authenticated
+			if (localStorage.auth_token) {
+				this.$axios
+					.get('user/verify')
+					.then(res => {
+						if (res.status !== 200) {
+							// Unauthenticated
+							localStorage.clear()
+						}
+					})
+					.catch(err => {
+						if (err.response.status == 401) {
+							this.$toast('Session expired.', {
+								styles: this.$style.danger,
+								slot: '<i class="fas fa-user-clock"></i>',
+							})
+							localStorage.clear()
+						}
+						console.error(err.message)
+					})
+			}
+		},
 	}
 </script>
 
 <style lang="scss">
 	@import url('assets/css/bootstrap.min.css');
+	// @import url('https://bootswatch.com/4/lux/bootstrap.min.css');
 	html {
 		scroll-behavior: smooth;
 	}
