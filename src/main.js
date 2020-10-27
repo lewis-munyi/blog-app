@@ -15,7 +15,7 @@ window.$('body').tooltip({ selector: '[data-toggle=tooltip]' })
 
 // Set Axios Headers
 axios.defaults.headers.post['Content-Type'] = 'application/json'
-axios.defaults.baseURL = 'http://lewis-blog-backend.herokuapp.com/api/v1/'
+axios.defaults.baseURL = 'http://jarida-blog.herokuapp.com/api/v1/'
 // axios.defaults.baseURL = 'http://localhost:3000/api/v1/'
 
 //Set Bearer token if token exists
