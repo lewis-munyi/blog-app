@@ -36,6 +36,7 @@
     "register-service-worker": "^1.7.1",
     "serve-static": "^1.14.1",
     "vue": "^3.0.0-0",
+    "vue-dk-toast": "^0.1.24",
     "vue-notification": "^1.3.20",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
