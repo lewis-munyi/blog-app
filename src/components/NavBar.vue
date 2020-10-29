@@ -17,7 +17,7 @@
 			<div class="collapse navbar-collapse" id="navbar">
 				<ul class="navbar-nav mr-auto align-left"></ul>
 				<ul class="navbar-nav mr-2 align-right">
-					<li class="nav-item">
+					<li class="nav-item d-flex align-items-center">
 						<a class="nav-link" :class="{ active: user != null }" href="#" @click="newPost">
 							New post
 							<span class="sr-only"></span>
@@ -126,6 +126,9 @@
 </script>
 
 <style lang="scss" scoped>
+nav {
+	padding: 8px 8px;
+}
 	// Profile pic dimensions
 	#ppic {
 		width: 40px;
