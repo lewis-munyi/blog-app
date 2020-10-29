@@ -26,7 +26,7 @@
 						if (err.response.status == 401) {
 							this.$toast('Session expired.', {
 								styles: this.$style.danger,
-								slot: '<i class="fas fa-user-clock"></i>',
+								slotLeft: '<i class="fas fa-user-clock"></i>',
 							})
 							localStorage.clear()
 						}
