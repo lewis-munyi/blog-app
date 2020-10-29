@@ -17,6 +17,12 @@
 			<div class="collapse navbar-collapse" id="navbar">
 				<ul class="navbar-nav mr-auto align-left"></ul>
 				<ul class="navbar-nav mr-2 align-right">
+					<li class="nav-item">
+						<a class="nav-link" :class="{ active: user != null }" href="#" @click="newPost">
+							New post
+							<span class="sr-only"></span>
+						</a>
+					</li>
 					<li class="nav-item active" v-if="user == null">
 						<a class="nav-link" href="#" @click="showSignUpModal">
 							{{ isSignIn == true ? 'Sign In' : 'Sign Up' }}
@@ -95,6 +101,10 @@
 			},
 			toggleSignIn() {
 				this.isSignIn = !this.isSignIn
+			},
+			newPost() {
+				if (this.user) this.$router.push({ name: 'New' })
+				else this.showSignUpModal()
 			},
 			logout() {
 				localStorage.setItem('auth_token', null)
