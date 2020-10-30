@@ -111,7 +111,7 @@
 				}
 
 				this.$axios
-					.post('posts/', this.post)
+					.post('posts/new', this.post)
 					.then(res => {
 						this.$toast('Published!', {
 							styles: this.$style.success,
