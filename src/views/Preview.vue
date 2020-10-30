@@ -25,7 +25,7 @@
 				</div>
 				<VueMarkdownIt
 					v-if="post"
-					class="card rounded p-2"
+					class="card rounded p-5"
 					:plugins="plugins"
 					:source="post.content"
 					:breaks="true"
