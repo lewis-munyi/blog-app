@@ -94,7 +94,7 @@
 				if (!this.post.title || !this.post.content) {
 					return this.$toast('Provide a title and body', {
 						styles: this.$style.danger,
-						slot: `<i class="fas fa-exclamation-triangle"></i>`,
+						slotLeft: `<i class="fas fa-exclamation-triangle"></i>`,
 					})
 				}
 
@@ -106,7 +106,7 @@
 				) {
 					return this.$toast('Enter correct URL format', {
 						styles: this.$style.danger,
-						slot: `<i class="fas fa-exclamation-triangle"></i>`,
+						slotLeft: `<i class="fas fa-exclamation-triangle"></i>`,
 					})
 				}
 
@@ -115,7 +115,7 @@
 					.then(res => {
 						this.$toast('Published!', {
 							styles: this.$style.success,
-							slot: `<i class="fas fa-circle-check"></i>`,
+							slotLeft: `<i class="fas fa-circle-check"></i>`,
 						})
 						localStorage.removeItem('draft')
 						this.$router.push({ name: 'Post', params: { id: res.data._id } })
@@ -123,11 +123,16 @@
 					.catch(error => {
 						this.$toast(error.message, {
 							styles: this.$style.danger,
-							slot: `<i class="fas fa-exclamation-triangle"></i>`,
+							slotLeft: `<i class="fas fa-exclamation-triangle"></i>`,
 						})
 					})
 			},
 		},
+		mounted() {
+				if (localStorage.getItem('draft') != null) {
+					this.post = JSON.parse(localStorage.getItem('draft'))
+				}
+			},
 	}
 </script>
 <style lang="scss" scoped>
