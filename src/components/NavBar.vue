@@ -126,9 +126,9 @@
 </script>
 
 <style lang="scss" scoped>
-nav {
-	padding: 8px 8px;
-}
+	nav {
+		padding: 8px 8px;
+	}
 	// Profile pic dimensions
 	#ppic {
 		width: 40px;

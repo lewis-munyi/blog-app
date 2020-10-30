@@ -26,7 +26,7 @@ exports.create = (req, res) => {
 		claps: 0,
 		author_id: jwt_decode(req.headers.authorization.split(' ')[1]).user._id,
 		author: jwt_decode(req.headers.authorization.split(' ')[1]).user.name,
-		cover: req.body.cover ? req.body.cover : 'https://source.unsplash.com/random/1920/1080',
+		cover: req.body.cover ? req.body.cover : 'https://source.unsplash.com/random/800/400',
 	})
 
 	// Save Post in the database
