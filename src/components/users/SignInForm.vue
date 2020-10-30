@@ -1,12 +1,21 @@
 <template>
 	<div class="container">
+		<div style="width:100%" v-if="notif.message" class="d-flex justify-content-center">
+			<div
+				class="alert"
+				:class="{ 'alert-success': notif.type == 'success', 'alert-danger': notif.type == 'danger', 'alert-info': notif.type == 'info' }"
+			>
+				<div v-html="notif.icon"></div>
+				<strong>{{ notif.message }}</strong>
+			</div>
+		</div>
 		<form>
 			<fieldset>
 				<div class=" row form-group">
-					<div class="col col-sm-12 col-md-4">
+					<div class="col-sm-12 col-md-4">
 						<label for="email">Email address</label>
 					</div>
-					<div class="col col-sm-12 col-md-8">
+					<div class="sm-12 col-md-8">
 						<input
 							type="email"
 							class="form-control"
@@ -19,10 +28,10 @@
 					</div>
 				</div>
 				<div class="row form-group">
-					<div class="col col-sm-12 col-md-4">
+					<div class="col-sm-12 col-md-4">
 						<label for="password">Password</label>
 					</div>
-					<div class="col col-sm-12 col-md-8">
+					<div class="col-sm-12 col-md-8">
 						<input type="password" class="form-control" id="password" placeholder="Password" v-model="form.password" />
 					</div>
 				</div>
@@ -47,25 +56,31 @@
 					email: null,
 					password: null,
 				},
+				notif: {
+					type: null,
+					message: null,
+					icon: `<i class="fas fa-info'}`,
+				},
 			}
 		},
 		methods: {
+			alert(type, message, icon) {
+				this.notif.type = type
+				this.notif.message = message
+				this.notif.icon = `<i class="fas fa-${icon || 'info'}"`
+				setTimeout(() => {
+					this.notif.message = null
+					this.notif.type = null
+				}, 5000)
+			},
 			login() {
 				// Make sure all fields are filled
 				if (this.form.password == null || this.form.email == null) {
-					// console.log('Fill in all fields')
-					this.$toast(`Fill in all the fields`, {
-						styles: this.$style.danger,
-						slot: `<i class="fas fa-exclamation-triangle"></i>`,
-					})
+					this.alert('danger', `Fill in all the fields`, 'exclamation-triangle')
 				}
 				// Ensure correct email format
 				else if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.form.email)) {
-					// console.log('Enter correct email format')
-					this.$toast(`Enter correct email format`, {
-						styles: this.$style.danger,
-						slot: `<i class="fas fa-exclamation-triangle"></i>`,
-					})
+					this.alert('danger', `Enter correct email format`, 'exclamation-triangle')
 				} else {
 					this.$axios
 						.post('user/signin', this.form)
@@ -74,18 +89,15 @@
 							let { name, email, social, photo, _id } = res.data.user
 							localStorage.setItem('auth_token', res.data.token)
 							localStorage.setItem('user', JSON.stringify({ name, email, social, photo, _id }))
-							this.$toast(`Logged in successfuly!`, {
-								styles: this.$style.success,
-								slot: `<i class="fas fa-circle-check"></i>`,
-							})
+							this.alert('success', `Welcome back ${name.split(' ')[0]}!`, 'circle-check')
 							location.reload()
 						})
 						.catch(err => {
-							this.$toast(`Error! ${err.message}`, {
-								styles: this.$style.danger,
-								slot: `<i class="fas fa-exclamation-triangle"></i>`,
-							})
-							// console.log(err)
+							if (err.response.status == 401 || err.response.status == 404) {
+								this.alert('danger', err.response.data.message)
+							} else {
+								this.alert('danger', err.message)
+							}
 						})
 				}
 			},

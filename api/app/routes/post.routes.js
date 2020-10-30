@@ -6,7 +6,7 @@ const { withJWTAuthMiddleware } = require('express-kun')
 const protectedRouter = withJWTAuthMiddleware(router, 'yourSecretKey')
 
 // Create a new post
-protectedRouter.post('/', post.create)
+protectedRouter.post('/new', post.create)
 
 // Retrieve latest posts
 router.get('/all', post.findAll)

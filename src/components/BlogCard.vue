@@ -93,7 +93,7 @@
 				this.$axios.delete('/posts/' + id).then(() => {
 					this.$toast(`Post deleted.`, {
 						styles: this.$style.success,
-						slot: `<i class="fas fa-trash-alt"></i>`,
+						slotRight: `<i class="fas fa-trash-alt"></i>`,
 					})
 					// console.log(res.data.message)
 					this.$emit('update-posts')
@@ -110,13 +110,13 @@
 						.then(() => {
 							this.$toast(`Post shared successfully :D`, {
 								styles: this.$style.success,
-								slot: `<i class="far fa-check-circle"></i>`,
+								slotRight: `<i class="far fa-check-circle"></i>`,
 							})
 						})
 						.catch(error => {
 							this.$toast(`Error sharing post :(`, {
 								styles: this.$style.danger,
-								slot: `<i class="fas fa-exclamation-triangle"></i>`,
+								slotRight: `<i class="fas fa-exclamation-triangle"></i>`,
 							})
 							console.error('Error sharing', error)
 						})

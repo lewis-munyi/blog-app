@@ -2,10 +2,10 @@
 	<div class="container">
 		<form>
 			<div class=" row form-group">
-				<div class="col col-sm-12 col-md-4">
+				<div class="col-sm-12 col-md-4">
 					<label for="firstname">First Name</label>
 				</div>
-				<div class="col col-sm-12 col-md-8">
+				<div class="col-sm-12 col-md-8">
 					<input
 						type="text"
 						class="form-control"
@@ -17,10 +17,10 @@
 				</div>
 			</div>
 			<div class=" row form-group">
-				<div class="col col-sm-12 col-md-4">
+				<div class="col-sm-12 col-md-4">
 					<label for="lastname">Last Name</label>
 				</div>
-				<div class="col col-sm-12 col-md-8">
+				<div class="col-sm-12 col-md-8">
 					<input
 						type="lastname"
 						class="form-control"
@@ -32,10 +32,10 @@
 				</div>
 			</div>
 			<div class=" row form-group">
-				<div class="col col-sm-12 col-md-4">
+				<div class="col-sm-12 col-md-4">
 					<label for="email">Email address</label>
 				</div>
-				<div class="col col-sm-12 col-md-8">
+				<div class="col-sm-12 col-md-8">
 					<input
 						type="email"
 						class="form-control"
@@ -48,18 +48,18 @@
 				</div>
 			</div>
 			<div class="row form-group">
-				<div class="col col-sm-12 col-md-4">
+				<div class="col-sm-12 col-md-4">
 					<label for="password">Password</label>
 				</div>
-				<div class="col col-sm-12 col-md-8">
+				<div class="col-sm-12 col-md-8">
 					<input type="password" class="form-control" id="password" placeholder="Password" v-model.trim="form.password" />
 				</div>
 			</div>
 			<div class="row form-group">
-				<div class="col col-sm-12 col-md-4">
+				<div class="col-sm-12 col-md-4">
 					<label for="repeatPassword">Repeat Password</label>
 				</div>
-				<div class="col col-sm-12 col-md-8">
+				<div class="col-sm-12 col-md-8">
 					<input
 						type="password"
 						class="form-control"
@@ -70,10 +70,10 @@
 				</div>
 			</div>
 			<div class=" row form-group">
-				<div class="col col-sm-12 col-md-4">
+				<div class="col-sm-12 col-md-4">
 					<label for="social">Social Media</label>
 				</div>
-				<div class="col col-sm-12 col-md-8">
+				<div class="col-sm-12 col-md-8">
 					<input
 						type="text"
 						class="form-control"
@@ -86,10 +86,10 @@
 				</div>
 			</div>
 			<div class=" row form-group">
-				<div class="col col-sm-12 col-md-4">
+				<div class="col-sm-12 col-md-4">
 					<label for="photo">Photo URL</label>
 				</div>
-				<div class="col col-sm-12 col-md-8">
+				<div class="col-sm-12 col-md-8">
 					<input
 						type="text"
 						class="form-control"
@@ -102,10 +102,10 @@
 				</div>
 			</div>
 			<div class=" row form-group">
-				<div class="col col-sm-12 col-md-4">
+				<div class="col-sm-12 col-md-4">
 					<label for="banner">Banner URL</label>
 				</div>
-				<div class="col col-sm-12 col-md-8">
+				<div class="col-sm-12 col-md-8">
 					<input
 						type="text"
 						class="form-control"
@@ -115,6 +115,15 @@
 						v-model.lazy="form.banner"
 					/>
 					<small id="bannerHelp" class="form-text text-muted">Image will be displayed as your profile background</small>
+				</div>
+			</div>
+			<div v-if="notif.message" class="row justify-content-center">
+				<div
+					class="alert"
+					:class="{ 'alert-success': notif.type == 'success', 'alert-danger': notif.type == 'danger', 'alert-info': notif.type == 'info' }"
+				>
+					<div v-html="notif.icon"></div>
+					<strong>{{ notif.message }}</strong>
 				</div>
 			</div>
 			<div class="row">
@@ -142,24 +151,31 @@
 					photo: null,
 					banner: null,
 				},
+				notif: {
+					type: null,
+					message: null,
+					icon: `<i class="fas fa-info'}`,
+				},
 			}
 		},
 		methods: {
+			alert(type, message, icon) {
+				this.notif.type = type
+				this.notif.message = message
+				this.notif.icon = `<i class="fas fa-${icon || 'info'}"`
+				setTimeout(() => {
+					this.notif.message = null
+					this.notif.type = null
+				}, 5000)
+			},
 			signup() {
 				let { email, password, repeatPassword, photo } = this.form
 
 				// Make sure all fields are filled
 				if (Object.values(this.form).some(o => o === null)) {
-					return this.$toast(`Fill in all the fields!`, {
-						styles: this.$style.danger,
-						slot: `<i class="fas fa-exclamation-triangle"></i>`,
-					})
-					// return console.log('Fill in all fields')
+					return this.alert('danger', `Fill in all the fields`, 'exclamation-triangle')
 				} else if (password !== repeatPassword) {
-					return this.$toast(`Passwords do not merge`, {
-						styles: this.$style.danger,
-						slot: `<i class="fas fa-exclamation-triangle"></i>`,
-					})
+					return this.alert('danger', `Passwords do not match`, 'exclamation-triangle')
 				}
 				// Ensure correct URL format
 				else if (
@@ -167,38 +183,22 @@
 						photo
 					)
 				) {
-					return this.$toast(`Enter correct URL format!`, {
-						styles: this.$style.danger,
-						slot: `<i class="fas fa-exclamation-triangle"></i>`,
-					})
-					// console.error('Enter correct photo URL')
+					return this.alert('danger', `Enter correct url format`, 'exclamation-triangle')
 				}
 				// Ensure correct email format
 				else if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-					return this.$toast(`Enter correct email format!`, {
-						styles: this.$style.danger,
-						slot: `<i class="fas fa-exclamation-triangle"></i>`,
-					})
-					// console.log('Enter correct email format')
+					// return this.$toast(`Enter correct email format!`, {
+					return this.alert('danger', `Enter correct email format`, 'exclamation-triangle')
 				} else {
 					this.$axios
 						.post('user/signup', this.form)
 						.then(() => {
 							// Signup successful
-							// console.log(res.status)
-							// alert('Signup successful! Log in to continue')
-							this.$toast(`Welcome aboard! 😃`, {
-								styles: this.$style.danger,
-								slot: `<i class="fas fa-exclamation-triangle"></i>`,
-							})
+							this.alert('success', `Welcome aboard! ${this.form.firstname} 😃`, 'exclamation-triangle')
 							return this.$emit('child-to-parent')
-							// return location.reload()
 						})
 						.catch(err => {
-							return this.$toast(`Error! ${err.message}`, {
-								styles: this.$style.danger,
-								slot: `<i class="fas fa-exclamation-triangle"></i>`,
-							})
+							return this.alert('danger', `Error! ${err.message}`, 'exclamation-triangle')
 						})
 				}
 			},

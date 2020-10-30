@@ -9,21 +9,18 @@
 			<div class="center" v-else>
 				<div class="caption">
 					<h2 class="title display-3">
-						{{ post.title }}
+						{{ post.title || 'No title' }}
 					</h2>
-					<p class="text" v-if="error !== null">{{ error.status }} | {{ error.message }}</p>
-					<p class="text">By {{ post.author }}</p>
-					<button @click="share(post.title, post.brief, post._id)" class="btn btn-sm btn-primary">
-						Share <i class="fas fa-share"></i>
-					</button>
+					<p class="text">{{ post.description || 'No description provided' }}</p>
+					<button @click="publish" class="btn btn-secondary rounded">Publish <i class="fas fa-save"></i></button>
 				</div>
 			</div>
 		</header>
 		<section class="blog" id="blog">
 			<div class="container">
-				<div class="row" v-if="!isLoading && post == null">
+				<div class="row" v-if="post == null">
 					<div class="col-sm-12">
-						Post not found
+						No content provided
 					</div>
 				</div>
 				<VueMarkdownIt
@@ -57,22 +54,25 @@
 			Loader,
 			VueMarkdownIt,
 		},
+		props: {
+			postString: String,
+		},
+		computed: {
+			post() {
+				return JSON.parse(this.postString)
+			},
+		},
 		data() {
 			return {
-				isEmpty: true,
-				isLoading: true,
-				post: null,
-				user: null,
-				error: null,
 				plugins: [
-					{
-						plugin: MarkdownItStrikethroughAlt,
-					},
 					{
 						plugin: MarkdownItTaskLists,
 					},
 					{
 						plugin: MarkdownItTocDoneRight,
+					},
+					{
+						plugin: MarkdownItStrikethroughAlt,
 					},
 					{
 						plugin: MarkdownItAbbr,
@@ -90,46 +90,43 @@
 			}
 		},
 		methods: {
-			fetchPost() {
-				this.$axios
-					.get('/posts/' + this.$route.params.id)
-					.then(data => {
-						if (data.status == 404) {
-							this.$toast(`Post not found :(`, {
-								styles: this.$style.info,
-								slotRight: `<i class="fas fa-search"></i>`,
-							})
-							return this.isEmpty == false
-						}
-						this.isLoading = false
-						this.post = data.data
+			publish() {
+				if (!this.post.title || !this.post.content) {
+					return this.$toast('Provide a title and body', {
+						styles: this.$style.danger,
+						slot: `<i class="fas fa-exclamation-triangle"></i>`,
 					})
-					.catch(e => {
-						this.isLoading = false
-						this.$toast(`Error! ${e.message}`, {
-							styles: this.$style.danger,
-							slotRight: `<i class="fas fa-exclamation-triangle"></i>`,
-						})
-						this.error = { status: e.response.status, message: e.message }
-						console.error(e.message)
-					})
-			},
-			share(title, text, id) {
-				if (navigator.share) {
-					navigator
-						.share({
-							title,
-							text,
-							url: 'http://localhost:3000/post/' + id,
-						})
-						.then(() => {})
-						.catch(error => console.log('Error sharing', error))
 				}
+
+				if (
+					!this.post.cover ||
+					!/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/.test(
+						this.post.cover
+					)
+				) {
+					return this.$toast('Enter correct URL format', {
+						styles: this.$style.danger,
+						slot: `<i class="fas fa-exclamation-triangle"></i>`,
+					})
+				}
+
+				this.$axios
+					.post('posts/new', this.post)
+					.then(res => {
+						this.$toast('Published!', {
+							styles: this.$style.success,
+							slot: `<i class="fas fa-circle-check"></i>`,
+						})
+						localStorage.removeItem('draft')
+						this.$router.push({ name: 'Post', params: { id: res.data._id } })
+					})
+					.catch(error => {
+						this.$toast(error.message, {
+							styles: this.$style.danger,
+							slot: `<i class="fas fa-exclamation-triangle"></i>`,
+						})
+					})
 			},
-		},
-		mounted() {
-			this.isLoading = true
-			this.fetchPost()
 		},
 	}
 </script>
