@@ -26,7 +26,16 @@
 						Post not found
 					</div>
 				</div>
-				<div v-if="post" class="card" v-html="post.content"></div>
+				<VueMarkdownIt
+					v-if="post"
+					class="card rounded p-2"
+					:plugins="plugins"
+					:source="post.content"
+					:breaks="true"
+					:html="true"
+					:linkify="true"
+					:typographer="true"
+				/>
 			</div>
 		</section>
 	</div>
@@ -34,11 +43,19 @@
 
 <script>
 	import Loader from '@/components/Loader.vue'
+	import VueMarkdownIt from 'vue3-markdown-it'
+	import MarkdownItStrikethroughAlt from 'markdown-it-strikethrough-alt'
+	import MarkdownItAbbr from 'markdown-it-abbr'
+	import MarkdownItDeflist from 'markdown-it-deflist'
+	import MarkdownItEmoji from 'markdown-it-emoji'
+	import MarkdownItTaskLists from 'markdown-it-task-lists'
+	import MarkdownItTocDoneRight from 'markdown-it-toc-done-right'
 
 	export default {
 		name: 'Post',
 		components: {
 			Loader,
+			VueMarkdownIt,
 		},
 		data() {
 			return {
@@ -47,6 +64,29 @@
 				post: null,
 				user: null,
 				error: null,
+				plugins: [
+					{
+						plugin: MarkdownItStrikethroughAlt,
+					},
+					{
+						plugin: MarkdownItTaskLists,
+					},
+					{
+						plugin: MarkdownItTocDoneRight,
+					},
+					{
+						plugin: MarkdownItAbbr,
+					},
+					{
+						plugin: MarkdownItDeflist,
+					},
+					{
+						plugin: MarkdownItEmoji,
+					},
+					{
+						plugin: MarkdownItEmoji,
+					},
+				],
 			}
 		},
 		methods: {

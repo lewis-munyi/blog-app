@@ -45,7 +45,6 @@
 	import MarkdownItAbbr from 'markdown-it-abbr'
 	import MarkdownItDeflist from 'markdown-it-deflist'
 	import MarkdownItEmoji from 'markdown-it-emoji'
-	import MarkdownItHighlightjs from 'markdown-it-highlightjs'
 	import MarkdownItTaskLists from 'markdown-it-task-lists'
 	import MarkdownItTocDoneRight from 'markdown-it-toc-done-right'
 
@@ -86,9 +85,6 @@
 					},
 					{
 						plugin: MarkdownItEmoji,
-					},
-					{
-						plugin: MarkdownItHighlightjs,
 					},
 				],
 			}
