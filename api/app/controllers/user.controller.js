@@ -91,25 +91,30 @@ exports.signin = (req, res) => {
 exports.update = (req, res) => {
 	const { name, email, password, photo, social, banner } = req.body.user
 
-	const user = jwt_decode(req.headers.authorization.split(' ')[1]).user._id
-	const pass = jwt_decode(req.headers.authorization.split(' ')[1]).user.password
+	const _id = jwt_decode(req.headers.authorization.split(' ')[1]).user._id
+	const oldPassword = jwt_decode(req.headers.authorization.split(' ')[1]).user.password
+	const oldEmail = jwt_decode(req.headers.authorization.split(' ')[1]).user.email
+	const oldSocial = jwt_decode(req.headers.authorization.split(' ')[1]).user.social
+	const oldPhoto = jwt_decode(req.headers.authorization.split(' ')[1]).user.photo
+	const oldBanner = jwt_decode(req.headers.authorization.split(' ')[1]).user.banner
+	const oldName = jwt_decode(req.headers.authorization.split(' ')[1]).user.name
 
-	if (!name || !email || !password) {
-		return res.status(400).send({
-			message: 'Name, Email, or Password fields missing',
-		})
-	}
+	// if (!name || !email || !password) {
+	// 	return res.status(400).send({
+	// 		message: 'Name, Email, or Password fields missing',
+	// 	})
+	// }
 
 	// Find user and update
 	User.findByIdAndUpdate(
-		user,
+		_id,
 		{
-			email,
-			name,
-			password: password || pass,
-			social: social || '',
-			photo: photo || `https://ui-avatars.com/api/?name=${firstname}+${lastname}?size=512`,
-			banner: banner || 'https://source.unsplash.com/random/1920x1080',
+			email : email || oldEmail,
+			name : name || oldName,
+			password: password || oldPassword,
+			social: social || oldSocial,
+			photo: photo || oldPhoto,
+			banner: banner || oldBanner,
 		},
 		{ new: true } // Return the updated
 	)
