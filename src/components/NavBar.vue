@@ -34,7 +34,14 @@
 							<img id="ppic" :src="user.photo" alt="profile_photo" />
 						</a>
 						<div class="dropdown-menu dropdown-menu-lg-right">
-							<a class="dropdown-item font-weight-bold" href="#"><i class="fas fa-user"></i>{{ user.name }}</a>
+							<a
+								class="dropdown-item font-weight-bold"
+								data-toggle="tooltip"
+								data-placement="left"
+								title="Edit"
+								@click="showEditUserModal"
+								><i class="fas fa-user"></i>{{ user.name }}</a
+							>
 							<router-link :to="{ name: 'Blog', params: { id: user._id } }" class="dropdown-item"
 								><i class="fas fa-rss"></i>Blog</router-link
 							>
@@ -45,9 +52,9 @@
 					</li>
 				</ul>
 			</div>
-			<!-- Sign in Modal -->
+			<!-- Sign in/up Modals -->
 			<div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-lg">
+				<div class="modal-dialog modal-lg modal-dialog-centered">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="signUpModalLabel">
@@ -70,6 +77,30 @@
 					</div>
 				</div>
 			</div>
+			<!-- Edit user modal -->
+			<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUser" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="EditUserModalLabel">
+								Edit User
+							</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<EditUser />
+						</div>
+						<div class="modal-footer align-left">
+							<a href="#" @click="toggleSignIn" v-if="isSignIn == true" class="btn btn-ripple btn-sm btn-outline-secondary"
+								>or Sign Up</a
+							>
+							<a href="#" @click="toggleSignIn" v-else class="btn btn-ripple btn-sm btn-outline-secondary">or Sign In</a>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</nav>
 </template>
@@ -77,12 +108,14 @@
 <script>
 	import SignInForm from '@/components/users/SignInForm.vue'
 	import SignUpForm from '@/components/users/SignUpForm.vue'
+	import EditUser from '@/components/users/EditUser.vue'
 
 	export default {
 		name: 'NavBar',
 		components: {
 			SignInForm,
 			SignUpForm,
+			EditUser,
 		},
 		data() {
 			return {
@@ -92,6 +125,13 @@
 			}
 		},
 		methods: {
+			showEditUserModal() {
+				window.$('#editUserModal').modal({
+					keyboard: false,
+					backdrop: 'static',
+				})
+				window.$('#editUserModal').modal('show')
+			},
 			showSignUpModal() {
 				window.$('#signUpModal').modal({
 					keyboard: false,
