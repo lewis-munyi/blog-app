@@ -89,11 +89,12 @@ exports.signin = (req, res) => {
 }
 
 exports.update = (req, res) => {
-	const { firstname, lastname, email, password, photo, social, banner } = req.body.user
+	const { name, email, password, photo, social, banner } = req.body.user
 
 	const user = jwt_decode(req.headers.authorization.split(' ')[1]).user._id
+	const pass = jwt_decode(req.headers.authorization.split(' ')[1]).user.password
 
-	if (!firstname || !lastname || !email || !password) {
+	if (!name || !email || !password) {
 		return res.status(400).send({
 			message: 'Name, Email, or Password fields missing',
 		})
@@ -104,8 +105,8 @@ exports.update = (req, res) => {
 		user,
 		{
 			email,
-			password,
-			name: firstname.concat(' ', lastname),
+			name,
+			password: password || pass,
 			social: social || '',
 			photo: photo || `https://ui-avatars.com/api/?name=${firstname}+${lastname}?size=512`,
 			banner: banner || 'https://source.unsplash.com/random/1920x1080',
