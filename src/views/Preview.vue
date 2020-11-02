@@ -129,10 +129,10 @@
 			},
 		},
 		mounted() {
-				if (localStorage.getItem('draft') != null) {
-					this.post = JSON.parse(localStorage.getItem('draft'))
-				}
-			},
+			if (localStorage.getItem('draft') != null) {
+				this.post = JSON.parse(localStorage.getItem('draft'))
+			}
+		},
 	}
 </script>
 <style lang="scss" scoped>
