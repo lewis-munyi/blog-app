@@ -86,9 +86,9 @@
 						.post('user/signin', this.form)
 						.then(res => {
 							// Login successful
-							let { name, email, social, photo, _id } = res.data.user
+							let { name, email, social, photo, banner, _id } = res.data.user
 							localStorage.setItem('auth_token', res.data.token)
-							localStorage.setItem('user', JSON.stringify({ name, email, social, photo, _id }))
+							localStorage.setItem('user', JSON.stringify({ name, email, social, photo, banner, _id }))
 							this.alert('success', `Welcome back ${name.split(' ')[0]}!`, 'circle-check')
 							location.reload()
 						})

@@ -87,7 +87,7 @@
 			</div>
 			<div class=" row form-group">
 				<div class="col-sm-12 col-md-4">
-					<label for="photo">Photo URL</label>
+					<label for="photo">Profile Photo URL</label>
 				</div>
 				<div class="col-sm-12 col-md-8">
 					<input
