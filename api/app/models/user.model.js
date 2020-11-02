@@ -1,4 +1,4 @@
-const { String} = require('core-js')
+const { String } = require('core-js')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 

@@ -30,7 +30,7 @@ const routes = [
 		path: '/user/:id',
 		name: 'Blog',
 		component: () => import(/* webpackChunkName: "blog" */ '../views/Blog.vue'),
-	}
+	},
 ]
 
 const router = createRouter({
